@@ -1,0 +1,90 @@
+![fsm.png](fsm.png)
+
+00: nessuna mossa
+
+01: Sasso
+
+10: Carta
+
+11: Forbice
+
+
+OutputWM: who won the match:
+- 00:even
+- 01:P1
+- 10:P2
+  
+OutputWG: who is winning the game: same as above
+
+OkMatches: whether or not the number of matches is ok (>4)
+4<=19
+
+| Play | okmin4 | max | MoveP1 | MoveP2 | OutputWM | OutputWG | State | Target | comment                           |
+| ---- | ------ | --- | ------ | ------ | -------- | -------- | ----- | ------ | --------------------------------- |
+| 0    | -      | -   | -      | -      | -        | -        | STRT  | STRT   |                                   |
+| 0    | -      | -   | -      | -      | -        | -        | FPV1  | STRT   | reset                             |
+| 0    | -      | -   | -      | -      | -        | -        | FPV2  | STRT   | reset                             |
+| 0    | -      | -   | -      | -      | -        | -        | FPP   | STRT   | reset                             |
+| 1    | -      | -   | 01     | 11     | 01       | 01       | STRT  | V1     | sasso-forbice                     |
+| 1    | -      | -   | 10     | 01     | 01       | 01       | STRT  | V1     | carta-sasso                       |
+| 1    | -      | -   | 11     | 10     | 01       | 01       | STRT  | V1     | forbice-carta                     |
+| 1    | -      | -   | 11     | 01     | 10       | 10       | STRT  | V2     | forbice-sasso                     |
+| 1    | -      | -   | 01     | 10     | 10       | 10       | STRT  | V2     | sasso-carta                       |
+| 1    | -      | -   | 10     | 11     | 10       | 10       | STRT  | V2     | carta-forbice                     |
+| 1    | -      | -   | 01     | 01     | 00       | 00       | STRT  | P      | sasso-sasso                       |
+| 1    | -      | -   | 10     | 10     | 00       | 00       | STRT  | P      | carta-carta                       |
+| 1    | -      | -   | 11     | 11     | 00       | 00       | STRT  | P      | forbice-forbice                   |
+| 1    | -      | 0   | 01     | 01     | 00       | 00       | P     | P      | sasso-sasso                       |
+| 1    | -      | 0   | 10     | 10     | 00       | 00       | P     | P      | carta-carta                       |
+| 1    | -      | 0   | 11     | 11     | 00       | 00       | P     | P      | forbice-forbice                   |
+| 1    | -      | 0   | 01     | 11     | 01       | 01       | P     | V1     | sasso-forbice                     |
+| 1    | -      | 0   | 10     | 01     | 01       | 01       | P     | V1     | carta-sasso                       |
+| 1    | -      | 0   | 11     | 10     | 01       | 01       | P     | V1     | forbice-carta                     |
+| 1    | -      | 0   | 11     | 01     | 10       | 10       | P     | V2     | forbice-sasso                     |
+| 1    | -      | 0   | 01     | 10     | 10       | 10       | P     | V2     | sasso-carta                       |
+| 1    | -      | 0   | 10     | 11     | 10       | 10       | P     | V2     | carta-forbice                     |
+| 1    | 1      | 1   | 01     | 01     | 00       | 00       | P     | FPP    | sasso-sasso     fromeventowineven |
+| 1    | 1      | 1   | 10     | 10     | 00       | 00       | P     | FPP    | carta-carta     fromeventowineven |
+| 1    | 1      | 1   | 11     | 11     | 00       | 00       | P     | FPP    | forbice-forbice fromeventowineven |
+| 1    | 1      | 1   | 01     | 11     | 01       | 01       | P     | FPV1   | sasso-forbice fromeventowin1      |
+| 1    | 1      | 1   | 10     | 01     | 01       | 01       | P     | FPV1   | carta-sasso   fromeventowin1      |
+| 1    | 1      | 1   | 11     | 10     | 01       | 01       | P     | FPV1   | forbice-carta fromeventowin1      |
+| 1    | 1      | 1   | 11     | 01     | 10       | 10       | P     | FPV2   | forbice-sasso fromeventowin2      |
+| 1    | 1      | 1   | 01     | 10     | 10       | 10       | P     | FPV2   | sasso-carta   fromeventowin2      |
+| 1    | 1      | 1   | 10     | 11     | 10       | 10       | P     | FPV2   | carta-forbice fromeventowin2      |
+| 1    | 0      | 0   | 01     | 11     | 01       | 01       | V1    | V1-2   | sasso-forbice 1wins2time          |
+| 1    | 0      | 0   | 10     | 01     | 01       | 01       | V1    | V1-2   | carta-sasso   1wins2time          |
+| 1    | 0      | 0   | 11     | 10     | 01       | 01       | V1    | V1-2   | forbice-carta 1wins2time          |
+| 1    | 1      | 1   | 01     | 11     | 01       | 01       | V1    | FPV1   | sasso-forbice winp1               |
+| 1    | 1      | 1   | 10     | 01     | 01       | 01       | V1    | FPV1   | carta-sasso   winp1               |
+| 1    | 1      | 1   | 11     | 10     | 01       | 01       | V1    | FPV1   | forbice-carta winp1               |
+| 1    | -      | 0   | 11     | 01     | 10       | 00       | V1    | P      | forbice-sasso  gotoeven           |
+| 1    | -      | 0   | 01     | 10     | 10       | 00       | V1    | P      | sasso-carta    gotoeven           |
+| 1    | -      | 0   | 10     | 11     | 10       | 00       | V1    | P      | carta-forbice  gotoeven           |
+| 1    | 1      | 1   | 11     | 01     | 10       | 00       | V1    | FPP    | forbice-sasso  wineven            |
+| 1    | 1      | 1   | 01     | 10     | 10       | 00       | V1    | FPP    | sasso-carta    wineven            |
+| 1    | 1      | 1   | 10     | 11     | 10       | 00       | V1    | FPP    | carta-forbice  wineven            |
+| 1    | 0      | 0   | 11     | 01     | 10       | 10       | V2    | V2-2   | forbice-sasso  2wins2time         |
+| 1    | 0      | 0   | 01     | 10     | 10       | 10       | V2    | V2-2   | sasso-carta    2wins2time         |
+| 1    | 0      | 0   | 10     | 11     | 10       | 10       | V2    | V2-2   | carta-forbice  2wins2time         |
+| 1    | 1      | 1   | 11     | 01     | 10       | 10       | V2    | FPV2   | forbice-sasso  winp2              |
+| 1    | 1      | 1   | 01     | 10     | 10       | 10       | V2    | FPV2   | sasso-carta    winp2              |
+| 1    | 1      | 1   | 10     | 11     | 10       | 10       | V2    | FPV2   | carta-forbice  winp2              |
+| 1    | -      | 0   | 01     | 11     | 01       | 00       | V2    | P      | sasso-forbice gotoeven            |
+| 1    | -      | 0   | 10     | 01     | 01       | 00       | V2    | P      | carta-sasso   gotoeven            |
+| 1    | -      | 0   | 11     | 10     | 01       | 00       | V2    | P      | forbice-carta gotoeven            |
+| 1    | 1      | 1   | 01     | 11     | 01       | 00       | V2    | FPP    | sasso-forbice gotoeven            |
+| 1    | 1      | 1   | 10     | 01     | 01       | 00       | V2    | FPP    | carta-sasso   gotoeven            |
+| 1    | 1      | 1   | 11     | 10     | 01       | 00       | V2    | FPP    | forbice-carta gotoeven            |
+| 1    | -      | -   | 11     | 11     | 00       | 01       | V1-2  | FPV1   | forbice-forbice winp1             |
+| 1    | -      | -   | 01     | 01     | 00       | 01       | V1-2  | FPV1   | sasso-sasso     winp1             |
+| 1    | -      | -   | 10     | 10     | 00       | 01       | V1-2  | FPV1   | carta-carta     winp1             |
+| 1    | -      | -   | 11     | 11     | 00       | 10       | V2-2  | FPV2   | forbice-forbice winp2             |
+| 1    | -      | -   | 01     | 01     | 00       | 10       | V2-2  | FPV2   | sasso-sasso     winp2             |
+| 1    | -      | -   | 10     | 10     | 00       | 10       | V2-2  | FPV2   | carta-carta     winp2             |
+| 1    | -      | 0   | 11     | 11     | 00       | 01       | V1    | V1     | forbice-forbice evenrmainv1       |
+| 1    | -      | 0   | 01     | 01     | 00       | 01       | V1    | V1     | sasso-sasso     evenrmainv1       |
+| 1    | -      | 0   | 10     | 10     | 00       | 01       | V1    | V1     | carta-carta     evenrmainv1       |
+| 1    | -      | 0   | 11     | 11     | 00       | 10       | V2    | V2     | forbice-forbice evenrmainv2       |
+| 1    | -      | 0   | 01     | 01     | 00       | 10       | V2    | V2     | sasso-sasso     evenrmainv2       |
+| 1    | -      | 0   | 10     | 10     | 00       | 10       | V2    | V2     | carta-carta     evenrmainv2       |
