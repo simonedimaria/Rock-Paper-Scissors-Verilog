@@ -1,0 +1,11 @@
+
+
+
+.model NOT_1b
+.inputs A
+.outputs O
+
+.names A O
+0 1
+
+.end

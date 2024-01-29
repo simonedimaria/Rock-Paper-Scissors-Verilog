@@ -1,0 +1,9 @@
+.model ZERO_2b
+.outputs O1 O0
+
+.search Base/Constants/Zero_1b.blif
+
+.subckt ZERO_1b O=O1
+.subckt ZERO_1b O=O0
+
+.end

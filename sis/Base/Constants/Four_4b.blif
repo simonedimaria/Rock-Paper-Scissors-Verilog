@@ -1,0 +1,12 @@
+.model FOUR_4b
+.outputs O3 O2 O1 O0
+
+.search Base/Constants/One_1b.blif
+.search Base/Constants/Zero_1b.blif
+
+.subckt ZERO_1b O=O3
+.subckt ONE_1b O=O2 
+.subckt ZERO_1b O=O1
+.subckt ZERO_1b O=O0
+
+.end

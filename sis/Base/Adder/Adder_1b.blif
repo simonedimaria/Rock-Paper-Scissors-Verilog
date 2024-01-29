@@ -1,0 +1,28 @@
+# 1-bit adder
+#
+# Performs the sum between bits A and B (and the CIN input carry).
+# O is the result, and COUT is the output carry
+#
+
+.model ADDER_1b
+.inputs A B CIN
+.outputs COUT O
+
+# Performs the sum between bits A and B, output into K
+.names A B K
+10 1
+01 1
+
+
+# Performs the sum between bits K and CIN (carry in), output into O
+.names K CIN O
+10 1
+01 1
+
+# Checks eventual carry out
+.names A B CIN COUT
+11- 1
+1-1 1
+-11 1
+
+.end

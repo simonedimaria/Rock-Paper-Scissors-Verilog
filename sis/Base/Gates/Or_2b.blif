@@ -1,0 +1,10 @@
+# PORTA LOGICA OR
+
+.model OR_2b
+.inputs A B
+.outputs O
+
+.names A B O
+00 0
+
+.end

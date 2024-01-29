@@ -1,0 +1,21 @@
+# 8-bits adder
+
+# Imported Models:
+# ADDER_1b (A B CIN):(COUT O)
+
+
+.model ADDER_4b
+.inputs A3 A2 A1 A0 B3 B2 B1 B0 CIN
+.outputs COUT O3 O2 O1 O0
+
+# Imports the 1 bit adder
+.search Base/Adder/Adder_1b.blif
+
+# 4 1-bit adders
+.subckt ADDER_1b A=A0 B=B0 CIN=CIN O=O0 COUT=C0
+.subckt ADDER_1b A=A1 B=B1 CIN=C0 O=O1 COUT=C1
+.subckt ADDER_1b A=A2 B=B2 CIN=C1 O=O2 COUT=C2
+.subckt ADDER_1b A=A3 B=B3 CIN=C2 O=O3 COUT=COUT
+
+
+.end

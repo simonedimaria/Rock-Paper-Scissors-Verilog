@@ -1,0 +1,13 @@
+# Registro a 8 bit
+
+.model REGISTER_2b
+.inputs  I1 I0
+.outputs O1 O0
+
+# Importa il registro da 1 bit
+.search Base/Registers/Register_1b.blif
+
+.subckt Register_1b I=I1 O=O1
+.subckt Register_1b I=I0 O=O0
+
+.end

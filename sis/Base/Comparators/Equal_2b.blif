@@ -1,0 +1,18 @@
+
+# Imported Models:
+# XNOR_2b (A B):(O)
+# AND_2b (A):(O)
+
+.model EQUAL_2b
+.inputs A1 A0 B1 B0 
+.outputs O
+
+.search Base/Gates/And_2b.blif
+.search Base/Gates/Xnor_2b.blif
+
+.subckt XNOR_2b A=A0 B=B0 O=O0 
+.subckt XNOR_2b A=A1 B=B1 O=O1 
+.subckt AND_2b A=O0 B=O1 O=O 
+
+.end
+

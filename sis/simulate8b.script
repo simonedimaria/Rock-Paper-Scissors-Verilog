@@ -1,0 +1,1026 @@
+read_blif Base/Comparators/Equal_4b.blif
+
+simulate  0 0 0 0 0 0 0 0 
+ 
+ 
+ 
+simulate  0 0 0 0 0 0 0 1 
+ 
+ 
+ 
+simulate  0 0 0 0 0 0 1 0 
+ 
+ 
+ 
+simulate  0 0 0 0 0 0 1 1 
+ 
+ 
+ 
+simulate  0 0 0 0 0 1 0 0 
+ 
+ 
+ 
+simulate  0 0 0 0 0 1 0 1 
+ 
+ 
+ 
+simulate  0 0 0 0 0 1 1 0 
+ 
+ 
+ 
+simulate  0 0 0 0 0 1 1 1 
+ 
+ 
+ 
+simulate  0 0 0 0 1 0 0 0 
+ 
+ 
+ 
+simulate  0 0 0 0 1 0 0 1 
+ 
+ 
+ 
+simulate  0 0 0 0 1 0 1 0 
+ 
+ 
+ 
+simulate  0 0 0 0 1 0 1 1 
+ 
+ 
+ 
+simulate  0 0 0 0 1 1 0 0 
+ 
+ 
+ 
+simulate  0 0 0 0 1 1 0 1 
+ 
+ 
+ 
+simulate  0 0 0 0 1 1 1 0 
+ 
+ 
+ 
+simulate  0 0 0 0 1 1 1 1 
+ 
+ 
+ 
+simulate  0 0 0 1 0 0 0 0 
+ 
+ 
+ 
+simulate  0 0 0 1 0 0 0 1 
+ 
+ 
+ 
+simulate  0 0 0 1 0 0 1 0 
+ 
+ 
+ 
+simulate  0 0 0 1 0 0 1 1 
+ 
+ 
+ 
+simulate  0 0 0 1 0 1 0 0 
+ 
+ 
+ 
+simulate  0 0 0 1 0 1 0 1 
+ 
+ 
+ 
+simulate  0 0 0 1 0 1 1 0 
+ 
+ 
+ 
+simulate  0 0 0 1 0 1 1 1 
+ 
+ 
+ 
+simulate  0 0 0 1 1 0 0 0 
+ 
+ 
+ 
+simulate  0 0 0 1 1 0 0 1 
+ 
+ 
+ 
+simulate  0 0 0 1 1 0 1 0 
+ 
+ 
+ 
+simulate  0 0 0 1 1 0 1 1 
+ 
+ 
+ 
+simulate  0 0 0 1 1 1 0 0 
+ 
+ 
+ 
+simulate  0 0 0 1 1 1 0 1 
+ 
+ 
+ 
+simulate  0 0 0 1 1 1 1 0 
+ 
+ 
+ 
+simulate  0 0 0 1 1 1 1 1 
+ 
+ 
+ 
+simulate  0 0 1 0 0 0 0 0 
+ 
+ 
+ 
+simulate  0 0 1 0 0 0 0 1 
+ 
+ 
+ 
+simulate  0 0 1 0 0 0 1 0 
+ 
+ 
+ 
+simulate  0 0 1 0 0 0 1 1 
+ 
+ 
+ 
+simulate  0 0 1 0 0 1 0 0 
+ 
+ 
+ 
+simulate  0 0 1 0 0 1 0 1 
+ 
+ 
+ 
+simulate  0 0 1 0 0 1 1 0 
+ 
+ 
+ 
+simulate  0 0 1 0 0 1 1 1 
+ 
+ 
+ 
+simulate  0 0 1 0 1 0 0 0 
+ 
+ 
+ 
+simulate  0 0 1 0 1 0 0 1 
+ 
+ 
+ 
+simulate  0 0 1 0 1 0 1 0 
+ 
+ 
+ 
+simulate  0 0 1 0 1 0 1 1 
+ 
+ 
+ 
+simulate  0 0 1 0 1 1 0 0 
+ 
+ 
+ 
+simulate  0 0 1 0 1 1 0 1 
+ 
+ 
+ 
+simulate  0 0 1 0 1 1 1 0 
+ 
+ 
+ 
+simulate  0 0 1 0 1 1 1 1 
+ 
+ 
+ 
+simulate  0 0 1 1 0 0 0 0 
+ 
+ 
+ 
+simulate  0 0 1 1 0 0 0 1 
+ 
+ 
+ 
+simulate  0 0 1 1 0 0 1 0 
+ 
+ 
+ 
+simulate  0 0 1 1 0 0 1 1 
+ 
+ 
+ 
+simulate  0 0 1 1 0 1 0 0 
+ 
+ 
+ 
+simulate  0 0 1 1 0 1 0 1 
+ 
+ 
+ 
+simulate  0 0 1 1 0 1 1 0 
+ 
+ 
+ 
+simulate  0 0 1 1 0 1 1 1 
+ 
+ 
+ 
+simulate  0 0 1 1 1 0 0 0 
+ 
+ 
+ 
+simulate  0 0 1 1 1 0 0 1 
+ 
+ 
+ 
+simulate  0 0 1 1 1 0 1 0 
+ 
+ 
+ 
+simulate  0 0 1 1 1 0 1 1 
+ 
+ 
+ 
+simulate  0 0 1 1 1 1 0 0 
+ 
+ 
+ 
+simulate  0 0 1 1 1 1 0 1 
+ 
+ 
+ 
+simulate  0 0 1 1 1 1 1 0 
+ 
+ 
+ 
+simulate  0 0 1 1 1 1 1 1 
+ 
+ 
+ 
+simulate  0 1 0 0 0 0 0 0 
+ 
+ 
+ 
+simulate  0 1 0 0 0 0 0 1 
+ 
+ 
+ 
+simulate  0 1 0 0 0 0 1 0 
+ 
+ 
+ 
+simulate  0 1 0 0 0 0 1 1 
+ 
+ 
+ 
+simulate  0 1 0 0 0 1 0 0 
+ 
+ 
+ 
+simulate  0 1 0 0 0 1 0 1 
+ 
+ 
+ 
+simulate  0 1 0 0 0 1 1 0 
+ 
+ 
+ 
+simulate  0 1 0 0 0 1 1 1 
+ 
+ 
+ 
+simulate  0 1 0 0 1 0 0 0 
+ 
+ 
+ 
+simulate  0 1 0 0 1 0 0 1 
+ 
+ 
+ 
+simulate  0 1 0 0 1 0 1 0 
+ 
+ 
+ 
+simulate  0 1 0 0 1 0 1 1 
+ 
+ 
+ 
+simulate  0 1 0 0 1 1 0 0 
+ 
+ 
+ 
+simulate  0 1 0 0 1 1 0 1 
+ 
+ 
+ 
+simulate  0 1 0 0 1 1 1 0 
+ 
+ 
+ 
+simulate  0 1 0 0 1 1 1 1 
+ 
+ 
+ 
+simulate  0 1 0 1 0 0 0 0 
+ 
+ 
+ 
+simulate  0 1 0 1 0 0 0 1 
+ 
+ 
+ 
+simulate  0 1 0 1 0 0 1 0 
+ 
+ 
+ 
+simulate  0 1 0 1 0 0 1 1 
+ 
+ 
+ 
+simulate  0 1 0 1 0 1 0 0 
+ 
+ 
+ 
+simulate  0 1 0 1 0 1 0 1 
+ 
+ 
+ 
+simulate  0 1 0 1 0 1 1 0 
+ 
+ 
+ 
+simulate  0 1 0 1 0 1 1 1 
+ 
+ 
+ 
+simulate  0 1 0 1 1 0 0 0 
+ 
+ 
+ 
+simulate  0 1 0 1 1 0 0 1 
+ 
+ 
+ 
+simulate  0 1 0 1 1 0 1 0 
+ 
+ 
+ 
+simulate  0 1 0 1 1 0 1 1 
+ 
+ 
+ 
+simulate  0 1 0 1 1 1 0 0 
+ 
+ 
+ 
+simulate  0 1 0 1 1 1 0 1 
+ 
+ 
+ 
+simulate  0 1 0 1 1 1 1 0 
+ 
+ 
+ 
+simulate  0 1 0 1 1 1 1 1 
+ 
+ 
+ 
+simulate  0 1 1 0 0 0 0 0 
+ 
+ 
+ 
+simulate  0 1 1 0 0 0 0 1 
+ 
+ 
+ 
+simulate  0 1 1 0 0 0 1 0 
+ 
+ 
+ 
+simulate  0 1 1 0 0 0 1 1 
+ 
+ 
+ 
+simulate  0 1 1 0 0 1 0 0 
+ 
+ 
+ 
+simulate  0 1 1 0 0 1 0 1 
+ 
+ 
+ 
+simulate  0 1 1 0 0 1 1 0 
+ 
+ 
+ 
+simulate  0 1 1 0 0 1 1 1 
+ 
+ 
+ 
+simulate  0 1 1 0 1 0 0 0 
+ 
+ 
+ 
+simulate  0 1 1 0 1 0 0 1 
+ 
+ 
+ 
+simulate  0 1 1 0 1 0 1 0 
+ 
+ 
+ 
+simulate  0 1 1 0 1 0 1 1 
+ 
+ 
+ 
+simulate  0 1 1 0 1 1 0 0 
+ 
+ 
+ 
+simulate  0 1 1 0 1 1 0 1 
+ 
+ 
+ 
+simulate  0 1 1 0 1 1 1 0 
+ 
+ 
+ 
+simulate  0 1 1 0 1 1 1 1 
+ 
+ 
+ 
+simulate  0 1 1 1 0 0 0 0 
+ 
+ 
+ 
+simulate  0 1 1 1 0 0 0 1 
+ 
+ 
+ 
+simulate  0 1 1 1 0 0 1 0 
+ 
+ 
+ 
+simulate  0 1 1 1 0 0 1 1 
+ 
+ 
+ 
+simulate  0 1 1 1 0 1 0 0 
+ 
+ 
+ 
+simulate  0 1 1 1 0 1 0 1 
+ 
+ 
+ 
+simulate  0 1 1 1 0 1 1 0 
+ 
+ 
+ 
+simulate  0 1 1 1 0 1 1 1 
+ 
+ 
+ 
+simulate  0 1 1 1 1 0 0 0 
+ 
+ 
+ 
+simulate  0 1 1 1 1 0 0 1 
+ 
+ 
+ 
+simulate  0 1 1 1 1 0 1 0 
+ 
+ 
+ 
+simulate  0 1 1 1 1 0 1 1 
+ 
+ 
+ 
+simulate  0 1 1 1 1 1 0 0 
+ 
+ 
+ 
+simulate  0 1 1 1 1 1 0 1 
+ 
+ 
+ 
+simulate  0 1 1 1 1 1 1 0 
+ 
+ 
+ 
+simulate  0 1 1 1 1 1 1 1 
+ 
+ 
+ 
+simulate  1 0 0 0 0 0 0 0 
+ 
+ 
+ 
+simulate  1 0 0 0 0 0 0 1 
+ 
+ 
+ 
+simulate  1 0 0 0 0 0 1 0 
+ 
+ 
+ 
+simulate  1 0 0 0 0 0 1 1 
+ 
+ 
+ 
+simulate  1 0 0 0 0 1 0 0 
+ 
+ 
+ 
+simulate  1 0 0 0 0 1 0 1 
+ 
+ 
+ 
+simulate  1 0 0 0 0 1 1 0 
+ 
+ 
+ 
+simulate  1 0 0 0 0 1 1 1 
+ 
+ 
+ 
+simulate  1 0 0 0 1 0 0 0 
+ 
+ 
+ 
+simulate  1 0 0 0 1 0 0 1 
+ 
+ 
+ 
+simulate  1 0 0 0 1 0 1 0 
+ 
+ 
+ 
+simulate  1 0 0 0 1 0 1 1 
+ 
+ 
+ 
+simulate  1 0 0 0 1 1 0 0 
+ 
+ 
+ 
+simulate  1 0 0 0 1 1 0 1 
+ 
+ 
+ 
+simulate  1 0 0 0 1 1 1 0 
+ 
+ 
+ 
+simulate  1 0 0 0 1 1 1 1 
+ 
+ 
+ 
+simulate  1 0 0 1 0 0 0 0 
+ 
+ 
+ 
+simulate  1 0 0 1 0 0 0 1 
+ 
+ 
+ 
+simulate  1 0 0 1 0 0 1 0 
+ 
+ 
+ 
+simulate  1 0 0 1 0 0 1 1 
+ 
+ 
+ 
+simulate  1 0 0 1 0 1 0 0 
+ 
+ 
+ 
+simulate  1 0 0 1 0 1 0 1 
+ 
+ 
+ 
+simulate  1 0 0 1 0 1 1 0 
+ 
+ 
+ 
+simulate  1 0 0 1 0 1 1 1 
+ 
+ 
+ 
+simulate  1 0 0 1 1 0 0 0 
+ 
+ 
+ 
+simulate  1 0 0 1 1 0 0 1 
+ 
+ 
+ 
+simulate  1 0 0 1 1 0 1 0 
+ 
+ 
+ 
+simulate  1 0 0 1 1 0 1 1 
+ 
+ 
+ 
+simulate  1 0 0 1 1 1 0 0 
+ 
+ 
+ 
+simulate  1 0 0 1 1 1 0 1 
+ 
+ 
+ 
+simulate  1 0 0 1 1 1 1 0 
+ 
+ 
+ 
+simulate  1 0 0 1 1 1 1 1 
+ 
+ 
+ 
+simulate  1 0 1 0 0 0 0 0 
+ 
+ 
+ 
+simulate  1 0 1 0 0 0 0 1 
+ 
+ 
+ 
+simulate  1 0 1 0 0 0 1 0 
+ 
+ 
+ 
+simulate  1 0 1 0 0 0 1 1 
+ 
+ 
+ 
+simulate  1 0 1 0 0 1 0 0 
+ 
+ 
+ 
+simulate  1 0 1 0 0 1 0 1 
+ 
+ 
+ 
+simulate  1 0 1 0 0 1 1 0 
+ 
+ 
+ 
+simulate  1 0 1 0 0 1 1 1 
+ 
+ 
+ 
+simulate  1 0 1 0 1 0 0 0 
+ 
+ 
+ 
+simulate  1 0 1 0 1 0 0 1 
+ 
+ 
+ 
+simulate  1 0 1 0 1 0 1 0 
+ 
+ 
+ 
+simulate  1 0 1 0 1 0 1 1 
+ 
+ 
+ 
+simulate  1 0 1 0 1 1 0 0 
+ 
+ 
+ 
+simulate  1 0 1 0 1 1 0 1 
+ 
+ 
+ 
+simulate  1 0 1 0 1 1 1 0 
+ 
+ 
+ 
+simulate  1 0 1 0 1 1 1 1 
+ 
+ 
+ 
+simulate  1 0 1 1 0 0 0 0 
+ 
+ 
+ 
+simulate  1 0 1 1 0 0 0 1 
+ 
+ 
+ 
+simulate  1 0 1 1 0 0 1 0 
+ 
+ 
+ 
+simulate  1 0 1 1 0 0 1 1 
+ 
+ 
+ 
+simulate  1 0 1 1 0 1 0 0 
+ 
+ 
+ 
+simulate  1 0 1 1 0 1 0 1 
+ 
+ 
+ 
+simulate  1 0 1 1 0 1 1 0 
+ 
+ 
+ 
+simulate  1 0 1 1 0 1 1 1 
+ 
+ 
+ 
+simulate  1 0 1 1 1 0 0 0 
+ 
+ 
+ 
+simulate  1 0 1 1 1 0 0 1 
+ 
+ 
+ 
+simulate  1 0 1 1 1 0 1 0 
+ 
+ 
+ 
+simulate  1 0 1 1 1 0 1 1 
+ 
+ 
+ 
+simulate  1 0 1 1 1 1 0 0 
+ 
+ 
+ 
+simulate  1 0 1 1 1 1 0 1 
+ 
+ 
+ 
+simulate  1 0 1 1 1 1 1 0 
+ 
+ 
+ 
+simulate  1 0 1 1 1 1 1 1 
+ 
+ 
+ 
+simulate  1 1 0 0 0 0 0 0 
+ 
+ 
+ 
+simulate  1 1 0 0 0 0 0 1 
+ 
+ 
+ 
+simulate  1 1 0 0 0 0 1 0 
+ 
+ 
+ 
+simulate  1 1 0 0 0 0 1 1 
+ 
+ 
+ 
+simulate  1 1 0 0 0 1 0 0 
+ 
+ 
+ 
+simulate  1 1 0 0 0 1 0 1 
+ 
+ 
+ 
+simulate  1 1 0 0 0 1 1 0 
+ 
+ 
+ 
+simulate  1 1 0 0 0 1 1 1 
+ 
+ 
+ 
+simulate  1 1 0 0 1 0 0 0 
+ 
+ 
+ 
+simulate  1 1 0 0 1 0 0 1 
+ 
+ 
+ 
+simulate  1 1 0 0 1 0 1 0 
+ 
+ 
+ 
+simulate  1 1 0 0 1 0 1 1 
+ 
+ 
+ 
+simulate  1 1 0 0 1 1 0 0 
+ 
+ 
+ 
+simulate  1 1 0 0 1 1 0 1 
+ 
+ 
+ 
+simulate  1 1 0 0 1 1 1 0 
+ 
+ 
+ 
+simulate  1 1 0 0 1 1 1 1 
+ 
+ 
+ 
+simulate  1 1 0 1 0 0 0 0 
+ 
+ 
+ 
+simulate  1 1 0 1 0 0 0 1 
+ 
+ 
+ 
+simulate  1 1 0 1 0 0 1 0 
+ 
+ 
+ 
+simulate  1 1 0 1 0 0 1 1 
+ 
+ 
+ 
+simulate  1 1 0 1 0 1 0 0 
+ 
+ 
+ 
+simulate  1 1 0 1 0 1 0 1 
+ 
+ 
+ 
+simulate  1 1 0 1 0 1 1 0 
+ 
+ 
+ 
+simulate  1 1 0 1 0 1 1 1 
+ 
+ 
+ 
+simulate  1 1 0 1 1 0 0 0 
+ 
+ 
+ 
+simulate  1 1 0 1 1 0 0 1 
+ 
+ 
+ 
+simulate  1 1 0 1 1 0 1 0 
+ 
+ 
+ 
+simulate  1 1 0 1 1 0 1 1 
+ 
+ 
+ 
+simulate  1 1 0 1 1 1 0 0 
+ 
+ 
+ 
+simulate  1 1 0 1 1 1 0 1 
+ 
+ 
+ 
+simulate  1 1 0 1 1 1 1 0 
+ 
+ 
+ 
+simulate  1 1 0 1 1 1 1 1 
+ 
+ 
+ 
+simulate  1 1 1 0 0 0 0 0 
+ 
+ 
+ 
+simulate  1 1 1 0 0 0 0 1 
+ 
+ 
+ 
+simulate  1 1 1 0 0 0 1 0 
+ 
+ 
+ 
+simulate  1 1 1 0 0 0 1 1 
+ 
+ 
+ 
+simulate  1 1 1 0 0 1 0 0 
+ 
+ 
+ 
+simulate  1 1 1 0 0 1 0 1 
+ 
+ 
+ 
+simulate  1 1 1 0 0 1 1 0 
+ 
+ 
+ 
+simulate  1 1 1 0 0 1 1 1 
+ 
+ 
+ 
+simulate  1 1 1 0 1 0 0 0 
+ 
+ 
+ 
+simulate  1 1 1 0 1 0 0 1 
+ 
+ 
+ 
+simulate  1 1 1 0 1 0 1 0 
+ 
+ 
+ 
+simulate  1 1 1 0 1 0 1 1 
+ 
+ 
+ 
+simulate  1 1 1 0 1 1 0 0 
+ 
+ 
+ 
+simulate  1 1 1 0 1 1 0 1 
+ 
+ 
+ 
+simulate  1 1 1 0 1 1 1 0 
+ 
+ 
+ 
+simulate  1 1 1 0 1 1 1 1 
+ 
+ 
+ 
+simulate  1 1 1 1 0 0 0 0 
+ 
+ 
+ 
+simulate  1 1 1 1 0 0 0 1 
+ 
+ 
+ 
+simulate  1 1 1 1 0 0 1 0 
+ 
+ 
+ 
+simulate  1 1 1 1 0 0 1 1 
+ 
+ 
+ 
+simulate  1 1 1 1 0 1 0 0 
+ 
+ 
+ 
+simulate  1 1 1 1 0 1 0 1 
+ 
+ 
+ 
+simulate  1 1 1 1 0 1 1 0 
+ 
+ 
+ 
+simulate  1 1 1 1 0 1 1 1 
+ 
+ 
+ 
+simulate  1 1 1 1 1 0 0 0 
+ 
+ 
+ 
+simulate  1 1 1 1 1 0 0 1 
+ 
+ 
+ 
+simulate  1 1 1 1 1 0 1 0 
+ 
+ 
+ 
+simulate  1 1 1 1 1 0 1 1 
+ 
+ 
+ 
+simulate  1 1 1 1 1 1 0 0 
+ 
+ 
+ 
+simulate  1 1 1 1 1 1 0 1 
+ 
+ 
+ 
+simulate  1 1 1 1 1 1 1 0 
+ 
+ 
+ 
+simulate  1 1 1 1 1 1 1 1 
+ 
+ 
+ 

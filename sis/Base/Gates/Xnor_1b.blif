@@ -1,0 +1,17 @@
+# Imported Models:
+# XOR_2b (A B):(O)
+# NOT_1b (A):(O)
+
+# returns 1 if both bits are equal
+.model XNOR_2b
+.inputs A B
+.outputs O
+
+.search Base/Gates/Xor_2b.blif
+.search Base/Gates/Not_1b.blif
+
+.subckt XOR_2b A=A B=B O=tmp_out
+.subckt NOT_1b A=tmp_out O=O
+
+
+.end

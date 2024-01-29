@@ -1,0 +1,10 @@
+# PORTA LOGICA AND
+
+.model AND_2b
+.inputs A B
+.outputs O
+
+.names A B O
+11 1
+
+.end
