@@ -5,7 +5,7 @@
 .outputs  O3 O2 O1 O0
 
 # Importa il multiplexer per 2 ingressi da 1 bit l'uno
-.search Mux/Mux_2i1b.blif
+.search Base/Mux/Mux_2i1b.blif
 
 # Usa 8 multiplexer in parallelo
 .subckt MUX_2i1b S=S I1=A3 I0=B3 O=O3
