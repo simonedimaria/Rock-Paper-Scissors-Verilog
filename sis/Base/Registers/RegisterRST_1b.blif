@@ -1,0 +1,13 @@
+# Registro a 1 bit
+
+.model REGISTERRST_1b
+.inputs I RST
+.outputs O
+
+.names RST I IR
+1- 0
+00 0
+
+# input, output, rising edge, no clock, reset status
+.latch IR O re NIL 0
+.end
