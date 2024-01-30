@@ -170,10 +170,16 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 ---
 # 7. TO-DO
 
-- [ ] FSMD
-  - [ ] Finite State Machine diagram using [PlantUML](https://plantuml.com/state-diagram)
-  - [ ] Datapath using [draw.io](https://draw.io)
+- [X] FSM
+  - [X] Finite State Machine diagram using [Tikz on LaTeX](https://tikz.dev/library-automata)
+  - [X] Use 5 states instead of 6 by removing the START state 
+  - [ ] Fix input/output bits in table
+  - [ ] how to manipulate idle? 
+- [ ] Datapath using [draw.io](https://draw.io)
+  - [ ] write bit size on each wire, registry, I/O, ...
+  - [ ] fix constants invisible wire 
 - [ ] Verilog implementation
+  - [ ] Design structure
 - [ ] SIS implementation
 - [ ] Testbench
 - [ ] Pre-optimization statistics
