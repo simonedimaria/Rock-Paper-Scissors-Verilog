@@ -150,20 +150,25 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 # 6. Notes
 
 ## 6.1) Design choices
-> Difficoltà 1:  
+> **Difficoltà 1**:  
 > Identificazione segnali di controllo che vengono prodotti dalla FSM e che pilotano la selezione dei dati nel DataPath.
 
 **Soluzione**: [...]
 
-> Difficoltà 2:
+> **Difficoltà 2**:  
 > Generazione da parte del DataPath di quei segnali di condizione che vincolano l'evoluzione tra gli stati della FSM
 
 **Soluzione**: [...]
 
-> Design Choice 1: 
+> **Design Choice 1**:   
 > XNOR module or CMP module for comparisons (i.e. `manches>=4`, `manches<=19`, ...)
 
 [...]
+
+> **Design Choice 2**:   
+> Which code styleguide for Verilog?
+
+[lowRISC Verilog Coding Style](https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md)
 
 
 
