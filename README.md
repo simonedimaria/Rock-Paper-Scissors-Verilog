@@ -183,6 +183,9 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 - [ ] Datapath using [draw.io](https://draw.io)
   - [ ] write bit size on each wire, registry, I/O, ...
   - [ ] fix constants invisible wire 
+  - [ ] add names to registers
+  - [ ] make one big datapath module
+  - [ ] do the arrows nodes better
 - [ ] Verilog implementation
   - [ ] Design structure
 - [ ] SIS implementation
