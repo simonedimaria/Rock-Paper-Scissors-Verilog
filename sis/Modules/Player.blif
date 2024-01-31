@@ -1,16 +1,55 @@
-# Multiplexer 2 ingressi da 8 bit
 
-.model MUX_2i2b
-.inputs S A3 A2 A1 A0  B3 B2 B1 B0
-.outputs  O3 O2 O1 O0
 
-# Importa il multiplexer per 2 ingressi da 1 bit l'uno
-.search Base/Mux/Mux_2i1b.blif
+#imported models
+# INPUT_EQUAL_OUTPUT:(A O)
+# EQUAL_2b:(A1 A0  B1 B0 O)
+# REGISTER_2b:(I1 I0  O1 O0 )
 
-# Usa 8 multiplexer in parallelo
-.subckt MUX_2i1b S=S I1=A3 I0=B3 O=O3
-.subckt MUX_2i1b S=S I1=A2 I0=B2 O=O2
-.subckt MUX_2i1b S=S I1=A1 I0=B1 O=O1
-.subckt MUX_2i1b S=S I1=A0 I0=B0 O=O0
+
+#tests:
+#0 1 0 1 1 1 0 0 same move
+#0 1 0 1 1 1 0 0 same move
+#0 1 1 0 1 1 0 0 same move but different last winner
+#0 1 0 1 0 1 0 0 another move but same last winner
+.model PLAYER
+.inputs I_Player1 I_Player0 I_LastWinner1 I_LastWinner0   I_Move1  I_Move0 I_InvalidMove1 I_InvalidMove0
+.outputs  O_IsMoveValid  O_Move1 O_Move0
+
+.search Base/Gates/Not_1b.blif
+.search Base/Gates/And_2b.blif
+.search Base/Gates/Nand_2b.blif
+.search Base/Registers/Register_2b.blif
+.search Base/Utils/InputEqualOutput.blif
+.search Base/Comparators/Equal_2b.blif
+
+#Bring input move to output
+.subckt INPUT_EQUAL_OUTPUT A=I_Move0 O=O_Move0
+.subckt INPUT_EQUAL_OUTPUT A=I_Move1 O=O_Move1
+
+
+# Init register last move
+.subckt REGISTER_2b  I1=I_Move0 I0=I_Move1 O1=LastMove1 O0=LastMove0
+
+
+
+# Comparisons
+.subckt EQUAL_2b  A1=I_Move0 A0=I_Move1 B1=LastMove1 B0=LastMove0 O=EqualLastMove
+.subckt EQUAL_2b  A1=I_Player1 A0=I_Player0 B1=I_LastWinner1 B0=I_LastWinner0 O=EqualLastWinner
+.subckt EQUAL_2b  A1=I_InvalidMove1 A0=I_InvalidMove0 B1=I_Move1 B0=I_Move0 O=Invalid
+
+# Logic 
+#| EqualLastMove | EqualLastWinner | Invalid | ¬(EqualLastMove ∧ EqualLastWinner) ∧ ¬Invalid |
+#| ------------- | --------------- | ------- | --------------------------------------------- |
+#| F             | F               | F       | T                                           |
+#| F             | F               | T       | F                                           |
+#| F             | T               | F       | T                                           |
+#| F             | T               | T       | F                                           |
+#| T             | F               | F       | T                                           |
+#| T             | F               | T       | F                                           |
+#| T             | T               | F       | F                                           |
+#| T             | T               | T       | F                                           |
+.subckt NAND_2b  A=EqualLastMove B=EqualLastWinner O=NAND_EqualLastMove_EqualLastWinner
+.subckt NOT_1b  A=Invalid  O=NOT_Invalid 
+.subckt AND_2b  A=NOT_Invalid B=NAND_EqualLastMove_EqualLastWinner O=O_IsMoveValid
 
 .end
