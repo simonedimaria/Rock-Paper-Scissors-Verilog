@@ -1,0 +1,8 @@
+.model INPUT_EQUAL_OUTPUT
+.inputs A
+.outputs O
+
+.names A O
+1 1
+
+.end
