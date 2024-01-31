@@ -186,6 +186,9 @@ Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/te
 - [ ] Datapath using [draw.io](https://draw.io)
   - [ ] write bit size on each wire, registry, I/O, ...
   - [ ] fix constants invisible wire 
+  - [ ] add names to registers
+  - [ ] make one big datapath module
+  - [ ] do the arrows nodes better
 - [ ] Verilog implementation
   - [ ] Design structure
 - [ ] SIS implementation
