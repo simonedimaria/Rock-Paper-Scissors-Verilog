@@ -184,7 +184,6 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
   - [ ] write bit size on each wire, registry, I/O, ...
   - [ ] fix constants invisible wire 
   - [ ] add names to registers
-  - [ ] 
   - [ ] make one big datapath module
   - [ ] do the arrows nodes better
 - [ ] Verilog implementation
