@@ -189,8 +189,8 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 - [ ] Verilog implementation
   - [ ] Design structure
 - [ ] SIS implementation
-  - [ ] Module Players
-  - [ ] Module datapath
+  - [X] Module Players
+  - [X] Module datapath
 - [ ] Testbench
 - [ ] Pre-optimization statistics
 - [ ] Post-optimization statistics
