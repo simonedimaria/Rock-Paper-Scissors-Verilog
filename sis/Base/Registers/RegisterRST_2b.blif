@@ -1,6 +1,6 @@
 # Registro a 8 bit
 
-.model REGISTER_2b
+.model REGISTER_RST_2b
 .inputs  I1 I0 RST
 .outputs O1 O0
 
