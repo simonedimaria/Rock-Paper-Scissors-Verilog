@@ -12,13 +12,13 @@
 #0 1 1 0 1 1 0 0 same move but different last winner
 #0 1 0 1 0 1 0 0 another move but same last winner
 .model PLAYER
-.inputs I_Player1 I_Player0 I_LastWinner1 I_LastWinner0   I_Move1  I_Move0 I_InvalidMove1 I_InvalidMove0
+.inputs I_Player1 I_Player0 I_LastWinner1 I_LastWinner0   I_Move1  I_Move0 I_InvalidMove1 I_InvalidMove0 I_Reset
 .outputs  O_IsMoveValid  O_Move1 O_Move0
 
 .search Base/Gates/Not_1b.blif
 .search Base/Gates/And_2b.blif
 .search Base/Gates/Nand_2b.blif
-.search Base/Registers/Register_2b.blif
+.search Base/Registers/RegisterRST_2b.blif
 .search Base/Utils/InputEqualOutput.blif
 .search Base/Comparators/Equal_2b.blif
 
@@ -28,7 +28,7 @@
 
 
 # Init register last move
-.subckt REGISTER_2b  I1=I_Move0 I0=I_Move1 O1=LastMove1 O0=LastMove0
+.subckt REGISTER_RST_2b RST=I_Reset  I1=I_Move0 I0=I_Move1 O1=LastMove1 O0=LastMove0
 
 
 
