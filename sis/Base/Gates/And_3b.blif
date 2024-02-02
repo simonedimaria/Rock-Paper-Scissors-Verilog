@@ -1,0 +1,10 @@
+# PORTA LOGICA AND
+
+.model AND_3b
+.inputs A B C
+.outputs O
+
+.names A B C O
+111 1
+
+.end

@@ -1,7 +1,7 @@
 .model MAX_MATCHES_CALCULATOR
 .inputs I_Add4 I_Add3 I_Add2 I_Add1 I_Add0 I_IntA1 I_IntA0 I_IntB1 I_IntB0 I_Reset  
 .outputs  O_MaxMatches4 O_MaxMatches3 O_MaxMatches2 O_MaxMatches1 O_MaxMatches0 
-
+# A is least significant
 #tests:
 # simulate 0 0 1 0 0  1 0 1 1 1
 # simulate 0 0 1 0 0  1 1 1 0 1
