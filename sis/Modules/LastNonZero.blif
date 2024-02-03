@@ -1,0 +1,35 @@
+.model LAST_NON_ZERO
+.inputs I_Value1 I_Value0 I_Reset  
+.outputs  O_LastNonZero1 O_LastNonZero0 
+
+#tests
+# simulate 0 0 0
+# simulate 0 0 1
+# simulate 0 1 0
+# simulate 0 1 1
+# simulate 1 0 0
+# simulate 1 0 1
+# simulate 1 1 0
+# simulate 1 1 1
+
+.search Base/Constants/Zero_1b.blif
+.search Base/Mux/Mux_2i2b.blif
+.search Base/Registers/Register_2b.blif
+.search Base/Utils/NoFanout.blif
+.search Base/Gates/Nor_2b.blif
+
+
+
+.subckt ZERO_1b O=ZERO
+
+
+.subckt NOR_2b A=I_Value1 B=I_Value0 O=SelectStream
+.subckt MUX_2i2b S=SelectStream A1=I_Value1 A0=I_Value0    B1=Reg_LastNZOrReset1 B0=Reg_LastNZOrReset0    O1=O_LastNonZero1 O0=O_LastNonZero0  
+.subckt MUX_2i2b S=I_Reset   A1=O_LastNonZero1 A0=O_LastNonZero0    B1=ZERO B0=ZERO   O1=LastNZOrReset1 O0=LastNZOrReset0  
+.subckt REGISTER_2b  I1=LastNZOrReset1 I0=LastNZOrReset0   O1=Reg_LastNZOrReset1 O0=Reg_LastNZOrReset0
+
+
+
+
+
+.end

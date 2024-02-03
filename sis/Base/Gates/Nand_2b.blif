@@ -1,0 +1,12 @@
+.model NAND_2b
+.inputs A B
+.outputs O
+
+.search Base/Gates/And_2b.blif
+.search Base/Gates/Not_1b.blif
+
+.subckt AND_2b A=A B=B O=tmp_out
+.subckt NOT_1b A=tmp_out O=O
+
+
+.end
