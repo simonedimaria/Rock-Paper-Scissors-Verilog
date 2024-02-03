@@ -170,7 +170,10 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 
 [lowRISC Verilog Coding Style](https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md)
 
+> **Design Choice 3**:
+> What bit encoding to use for FSM states / Moves?
 
+Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/technical-articles/encoding-the-states-of-a-finite-state-machine-vhdl/
 
 ---
 # 7. TO-DO
