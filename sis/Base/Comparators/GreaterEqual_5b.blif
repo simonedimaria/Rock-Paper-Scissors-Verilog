@@ -1,0 +1,16 @@
+.model GREATER_EQUAL_5b
+.inputs  A4 A3 A2 A1 A0  B4 B3 B2 B1 B0 
+.outputs O 
+
+
+.search Base/Gates/Or_2b.blif
+.search Base/Comparators/Equal_5b.blif
+.search Base/Comparators/Greater_5b.blif
+ 
+.subckt GREATER_5b A4=A4 A3=A3 A2=A2 A1=A1 A0=A0  B4=B4 B3=B3 B2=B2 B1=B1 B0=B0 O=O0
+.subckt EQUAL_5b A4=A4 A3=A3 A2=A2 A1=A1 A0=A0  B4=B4 B3=B3 B2=B2 B1=B1 B0=B0 O=O1
+.subckt OR_2b A=O1 B=O0 O=O
+
+
+
+.end
