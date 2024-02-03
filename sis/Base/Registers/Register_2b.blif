@@ -7,7 +7,7 @@
 # Importa il registro da 1 bit
 .search Base/Registers/Register_1b.blif
 
-.subckt Register_1b I=I1 O=O1
-.subckt Register_1b I=I0 O=O0
+.subckt REGISTER_1b I=I1 O=O1
+.subckt REGISTER_1b I=I0 O=O0
 
 .end

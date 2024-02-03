@@ -1,0 +1,32 @@
+.model MAX_MATCHES_CALCULATOR
+.inputs I_Add4 I_Add3 I_Add2 I_Add1 I_Add0 I_IntA1 I_IntA0 I_IntB1 I_IntB0 I_Reset  
+.outputs  O_MaxMatches4 O_MaxMatches3 O_MaxMatches2 O_MaxMatches1 O_MaxMatches0 
+# A is least significant
+#tests:
+# simulate 0 0 1 0 0  1 0 1 1 1
+# simulate 0 0 1 0 0  1 1 1 0 1
+# simulate 0 0 1 0 0  0 0 0 0 0
+# simulate 0 0 1 0 0  1 0 1 1 1
+# simulate 0 0 1 0 0  1 0 1 1 0
+
+.search Base/Adder/Adder_5b.blif
+.search Base/Constants/Zero_1b.blif
+.search Base/Mux/Mux_2i5b.blif
+.search Base/Registers/Register_5b.blif
+.search Base/Utils/NoFanout.blif
+
+
+.subckt ZERO_1b O=ZERO
+
+
+# The Concat Module is emulated by selecting IntA, IntB, and zero accordingly.
+.subckt ADDER_5b A4=I_Add4 A3=I_Add3 A2=I_Add2 A1=I_Add1 A0=I_Add0   B4=ZERO B3=I_IntB1 B2=I_IntB0 B1=I_IntA1 B0=I_IntA0  O4=Result4 O3=Result3 O2=Result2 O1=Result1 O0=Result0  CIN=ZERO COUT=NF
+.subckt MUX_2i5b S=I_Reset A4=Result4 A3=Result3 A2=Result2 A1=Result1 A0=Result0   B4=ZERO B3=I_IntB1 B2=I_IntB0 B1=I_IntA1 B0=I_IntA0  O4=Selected4 O3=Selected3 O2=Selected2 O1=Selected1 O0=Selected0  
+
+# suppress no fanout warning
+.subckt NO_FANOUT  A=O_MaxMatches0NF B=NF O=O_MaxMatches0
+
+.subckt REGISTER_5b I4=Selected4 I3=Selected3 I2=Selected2 I1=Selected1 I0=Selected0 O4=O_MaxMatches4 O3=O_MaxMatches3 O2=O_MaxMatches2 O1=O_MaxMatches1 O0=O_MaxMatches0NF
+
+
+.end

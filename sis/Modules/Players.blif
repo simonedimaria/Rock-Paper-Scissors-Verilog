@@ -1,0 +1,44 @@
+
+
+#imported models
+# PLAYER:(I_Player1 I_Player0 I_LastWinner1 I_LastWinner0 I_Reset   I_Move1  I_Move0 I_InvalidMove1 I_InvalidMove0 : O_IsMoveValid  O_Move1 O_Move0)
+# LAST_NON_ZERO:(I_Value1 I_Value0 I_Reset : O_LastNonZero1 O_LastNonZero0)
+
+
+#tests:
+# simulate 0 0 0 1 0 0 1
+# simulate 0 1 1 0 0 0 1
+# simulate 0 1 0 1 1 0 1
+# simulate 0 0 0 1 0 1 0
+# simulate 0 1 1 0 0 1 0
+# simulate 0 1 0 1 1 1 0
+# simulate 1 1 0 1 1 1 0
+.model PLAYERS
+.inputs I_Reset I_Player1Move1 I_Player1Move0 I_Player2Move1 I_Player2Move0 I_Winner1 I_Winner0
+.outputs  O_Player1Move1 O_Player1Move0 O_Player2Move1 O_Player2Move0 O_AreMovesValid
+
+.search Base/Gates/And_2b.blif
+.search Modules/Player.blif
+.search Modules/LastNonZero.blif
+.search Base/Constants/Zero_1b.blif
+.search Base/Constants/One_1b.blif
+
+.subckt ZERO_1b O=ZERO
+.subckt ONE_1b  O=ONE
+
+
+
+.subckt LAST_NON_ZERO  I_Value1=I_Winner1 I_Value0=I_Winner0 I_Reset=I_Reset O_LastNonZero1=LastWinner1 O_LastNonZero0=LastWinner0
+#player 1
+.subckt PLAYER  I_Reset=I_Reset I_Player1=ZERO I_Player0=ONE I_LastWinner1=LastWinner1 I_LastWinner0=LastWinner0  I_Move1=I_Player1Move1  I_Move0=I_Player1Move0 I_InvalidMove1=ZERO I_InvalidMove0=ZERO O_IsMoveValid=Valid1  O_Move1=O_Player1Move1 O_Move0=O_Player1Move0
+#player 2
+.subckt PLAYER   I_Reset=I_Reset  I_Player1=ONE I_Player0=ZERO I_LastWinner1=LastWinner1 I_LastWinner0=LastWinner0  I_Move1=I_Player2Move1  I_Move0=I_Player2Move0 I_InvalidMove1=ZERO I_InvalidMove0=ZERO O_IsMoveValid=Valid2  O_Move1=O_Player2Move1 O_Move0=O_Player2Move0
+
+.subckt AND_2b A=Valid1 B=Valid2 O=O_AreMovesValid
+
+
+
+#memory:
+#01     10      01
+#Winner MoveP1  MoveP2
+.end

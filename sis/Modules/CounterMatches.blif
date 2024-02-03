@@ -1,0 +1,31 @@
+.model COUNTER_MATCHES
+.inputs I_InitVal4 I_InitVal3 I_InitVal2 I_InitVal1 I_InitVa0 I_Reset I_Add  
+.outputs  O_NMatches4 O_NMatches3 O_NMatches2 O_NMatches1 O_NMatches0 
+
+#tests
+# simulate 0 0 0 0 0 0 0
+# simulate 0 0 0 0 0 1 0
+# simulate 0 0 0 0 0 0 1
+# simulate 0 0 0 0 0 1 1
+
+.search Base/Constants/Zero_1b.blif
+.search Base/Mux/Mux_2i5b.blif
+.search Base/Registers/Register_5b.blif
+.search Base/Utils/NoFanout.blif
+.search Base/Adder/Adder_5b.blif
+
+
+
+.subckt ZERO_1b O=ZERO
+
+
+.subckt MUX_2i5b S=I_Reset A4=New_Result4 A3=New_Result3 A2=New_Result2 A1=New_Result1 A0=New_Result0   B4=I_InitVal4 B3=I_InitVal3 B2=I_InitVal2 B1=I_InitVal1 B0=I_InitVa0  O4=Selected4 O3=Selected3 O2=Selected2 O1=Selected1 O0=Selected0  
+.subckt REGISTER_5b I4=Selected4 I3=Selected3 I2=Selected2 I1=Selected1 I0=Selected0 O4=O_NMatches4 O3=O_NMatches3 O2=O_NMatches2 O1=O_NMatches1 O0=O_NMatches0
+.subckt ADDER_5b A4=O_NMatches4 A3=O_NMatches3 A2=O_NMatches2 A1=O_NMatches1 A0=O_NMatches0   B4=ZERO B3=ZERO B2=ZERO B1=ZERO B0=I_Add  O4=New_Result4 O3=New_Result3 O2=New_Result2 O1=New_Result1 O0=New_Result0NF  CIN=ZERO COUT=NF
+
+# suppress no fanout warning
+.subckt NO_FANOUT  A=New_Result0NF B=NF O=New_Result0
+
+
+
+.end

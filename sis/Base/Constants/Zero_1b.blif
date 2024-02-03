@@ -1,5 +1,5 @@
 # Constante 0
-.model zero1b
+.model ZERO_1b
 .outputs O
 .names O
 
