@@ -192,7 +192,7 @@ Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/te
 - [ ] Verilog implementation
   - [ ] Design structure
 - [ ] SIS implementation
-  - [X] Module Players
+  - [ ] Module Player
   - [X] Module datapath
 - [ ] Testbench
 - [ ] Pre-optimization statistics
