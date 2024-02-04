@@ -9,7 +9,7 @@ module MorraCinese_tb;
   wire [1:0] MANCHE;
   wire [1:0] PARTITA;
   
-  reg [4:0] rounds_to_play;
+  reg [4:0] current_state, next_state;
   
   // Instantiate the Design Under Test (DUT)
 
@@ -20,7 +20,8 @@ module MorraCinese_tb;
     .INIZIA(INIZIA),
     .MANCHE(MANCHE),
     .PARTITA(PARTITA),
-    .rounds_to_play(rounds_to_play)
+    .current_state(current_state),
+    .next_state(next_state)
   );
   
   // Clock generation:
@@ -33,35 +34,41 @@ module MorraCinese_tb;
   // Test Cases generation: 
   // waiting 2ns (1 clock cycle) between each round
   initial begin
-
-    $monitor("@[%0t] INIZIA:%b, PRIMO:%b, SECONDO:%b, rounds_to_play:%b", $time, INIZIA, PRIMO, SECONDO, rounds_to_play);
+    $monitor("@[t:%0t][clk:%b]   | INPUTS        --> INIZIA:%b, PRIMO:%b, SECONDO:%b\n",  $time, clk, INIZIA, PRIMO, SECONDO,
+             "                | FSM internals --> current_state:%b, next_state:%b\n",  current_state, next_state,
+             "                | OUTPUTS       --> MANCHE:%b, PARTITA:%b",            MANCHE, PARTITA
+             );
 
     // Round 1
-    INIZIA = 1'b0;
-    PRIMO = 2'b01;
-    SECONDO = 2'b10;
     #2;
+    INIZIA  = 1'b1;
+    PRIMO   = 2'b01;
+    SECONDO = 2'b10;
+    
     
     // Round 2
-    PRIMO = 2'b10;
-    SECONDO = 2'b01;
     #2;
+    INIZIA  = 1'b0;
+    PRIMO   = 2'b10;
+    SECONDO = 2'b01;
     
     // Round 3
-    INIZIA = 1'b0;
-    PRIMO = 2'b11;
-    SECONDO = 2'b01;
     #2;
+    INIZIA  = 1'b0;
+    PRIMO   = 2'b11;
+    SECONDO = 2'b01;
     
     // Round 4
-    INIZIA = 1'b0;
-    PRIMO = 2'b01;
-    SECONDO = 2'b01;
     #2;
+    INIZIA  = 1'b0;
+    PRIMO   = 2'b01;
+    SECONDO = 2'b10;
+    
     
     // Restart the game
-    INIZIA = 1'b1;
-    PRIMO = 2'b00;   // setting n. of rounds to play:
+    #2;
+    INIZIA  = 1'b1;
+    PRIMO   = 2'b00;   // setting n. of rounds to play:
     SECONDO = 2'b01; // PRIMO+SECONDO + 4 = 0001 + 0100 = 5 rounds to play
     #2;
     

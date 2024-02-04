@@ -11,14 +11,24 @@ module MorraCinese (
   input wire INIZIA,        // Restart the game
   output reg [1:0] MANCHE,  // Result of the last round
   output reg [1:0] PARTITA, // Result of the entire game
+  //output reg [4:0] current_state, next_state
 );
 
   //---------- Internal Constants ----------
   localparam int MINROUNDS = 4;
+  localparam  INVALID = 2'b00,
+              PLAYER1 = 2'b01,
+              PLAYER2 = 2'b10,
+              TIE     = 2'b11;
+  localparam  NOT_ENDED = 2'b00,
+              P1_WINNER = 2'b01,
+              P2_WINNER = 2'b10,
+              NO_WINNER = 2'b11;
+              
   // FSM states (one-hot encoding)
   parameter   P1_W2    = 5'b00001,
               P1_W1    = 5'b00010,
-              TIE      = 5'b00100,
+              DRAW     = 5'b00100, // @TO-DO: rename to start
               P2_W1    = 5'b01000,
               P2_W2    = 5'b10000;
   // Moves
@@ -37,19 +47,28 @@ module MorraCinese (
     endfunction
   endclass
 
-  localparam  ROCK     = 2'b01,
-              PAPER    = 2'b11,
-              SCISSORS = 2'b10;
+  //localparam  bit ROCK     = 2'b01,
+  //            PAPER    = 2'b11,
+  //            SCISSORS = 2'b10;
 
-  // Combinations       move          win_on      lose_to           
-  localparam  moves = { ROCK:     new(SCISSORS,   PAPER),
-                        PAPER:    new(ROCK,       SCISSORS),
-                        SCISSORS: new(PAPER,      ROCK)
-                      };
+  typedef enum bit [1:0] {
+    ROCK      = 2'b01,
+    PAPER     = 2'b11,
+    SCISSORS  = 2'b10
+  } move_id;
+
+  Move moves [move_id];
+  
+  initial begin
+    moves[ROCK]     = new(SCISSORS,   PAPER);
+    moves[PAPER]    = new(ROCK,       SCISSORS);
+    moves[SCISSORS] = new(PAPER,      ROCK);
+  end
   
   //---------- Internal Registers ----------
   reg [4:0] rounds_to_play;
   reg [4:0] rounds_played;
+  reg MOVE_NOT_VALID;
   reg [4:0] current_state, next_state;
 
   ////////////////////
@@ -65,46 +84,34 @@ module MorraCinese (
   // @TO-DO: is posedge INIZIA needed?
   always @(posedge clk or posedge INIZIA) begin: FSM_PresentStateFFs 
     // ---- rst signal ----
-    if (INIZIA) current_state <= TIE;         // reset the FSM
+    if (INIZIA) current_state <= DRAW;         // reset the FSM
     else        current_state <= next_state;    
   end
 
   always @(current_state or PRIMO or SECONDO) begin: FSM_NextStateLogic
-  //always @(posedge clk) begin: Datapath
-  //  // ---- rst signal ----
-  //  if (INIZIA) begin
-  //    current_state <= TIE;               // reset the FSM
-  //    rounds_to_play <= {PRIMO,SECONDO};  // set the n. of rounds to play
-  //  end
-//
-  //  // [...]
-  //  if ((PRIMO || SECOND 2'b00) begin
-  //    rounds_to_play <= rounds_to_play;
-  //  end
-  //  else begin
-  //    rounds_to_play <= rounds_to_play + 1;
-  //  end
-  //end
     next_state = 5'bx; // go unknown if not all state transitions have been explicitly assigned below
-    // [...] output logic
+    if (MOVE_NOT_VALID) begin // exit early
+    end
 
-    case (current_state)
-    TIE:    if      (moves[PRIMO].win_on(SECONDO))    next_state = P1_W1;
-            else if (moves[PRIMO].lose_to(SECONDO))   next_state = P2_W1;
-            else                                      next_state = TIE;
-    P1_W1:  if      (moves[PRIMO].win_on(SECONDO))    next_state = P1_W2;
-            else if (moves[PRIMO].lose_to(SECONDO))   next_state = TIE;
-            else                                      next_state = P1_W1;
-    P2_W1:  if      (moves[SECONDO].win_on(PRIMO))    next_state = P2_W2;
-            else if (moves[SECONDO].lose_to(PRIMO))   next_state = TIE;
-            else                                      next_state = P2_W1;
-    P1_W2:  if      (moves[PRIMO].win_on(SECONDO))    next_state = TIE;
-            else if (moves[PRIMO].lose_to(SECONDO))   next_state = P1_W1;
-            else                                      next_state = P1_W2;
-    P2_W2:  if      (moves[SECONDO].win_on(PRIMO))    next_state = TIE;
-            else if (moves[SECONDO].lose_to(PRIMO))   next_state = P2_W1;
-            else                                      next_state = P2_W2;
-    endcase
+    else begin;
+      case (current_state)
+        DRAW:   if      (moves[PRIMO].win_on(SECONDO))    begin next_state = P1_W1;  MANCHE = PLAYER1;  PARTITA = NOT_ENDED; end
+                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = P2_W1;  MANCHE = PLAYER2;  PARTITA = NOT_ENDED; end
+                else                                      begin next_state = DRAW;   MANCHE = TIE;      PARTITA = NOT_ENDED; end
+        P1_W1:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = P1_W2;  MANCHE = PLAYER1;  PARTITA = P1_WINNER; end    
+                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = DRAW;   MANCHE = PLAYER2;  PARTITA = NOT_ENDED; end  
+                else                                      begin next_state = P1_W1;  MANCHE = TIE;      PARTITA = NOT_ENDED; end  
+        P2_W1:  if      (moves[SECONDO].win_on(PRIMO))    begin next_state = P2_W2;  MANCHE = PLAYER2;  PARTITA = P2_WINNER; end
+                else if (moves[SECONDO].lose_to(PRIMO))   begin next_state = DRAW;   MANCHE = PLAYER1;  PARTITA = NOT_ENDED; end
+                else                                      begin next_state = P2_W1;  MANCHE = TIE;      PARTITA = NOT_ENDED; end
+        P1_W2:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = DRAW;   MANCHE = PLAYER1;  PARTITA = P1_WINNER; end
+                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = P1_W1;  MANCHE = PLAYER2;  PARTITA = NOT_ENDED; end
+                else                                      begin next_state = P1_W2;  MANCHE = TIE;      PARTITA = P1_WINNER; end
+        P2_W2:  if      (moves[SECONDO].win_on(PRIMO))    begin next_state = DRAW;   MANCHE = PLAYER2;  PARTITA = P2_WINNER; end
+                else if (moves[SECONDO].lose_to(PRIMO))   begin next_state = P2_W1;  MANCHE = PLAYER1;  PARTITA = NOT_ENDED; end
+                else                                      begin next_state = P2_W2;  MANCHE = TIE;      PARTITA = P2_WINNER; end
+      endcase
+    end
   end
 
 

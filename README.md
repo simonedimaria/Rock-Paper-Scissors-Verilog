@@ -182,19 +182,31 @@ Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/te
   - [X] Finite State Machine diagram using [Tikz on LaTeX](https://tikz.dev/library-automata)
   - [X] Use 5 states instead of 6 by removing the START state 
   - [ ] Fix input/output bits in table
-  - [ ] how to manipulate idle? 
+  - [ ] how to manipulate idle?
+  - [ ] change "TIE" state to "START" 
 - [ ] Datapath using [draw.io](https://draw.io)
   - [ ] write bit size on each wire, registry, I/O, ...
+  - [ ] write `clk` input
   - [ ] fix constants invisible wire 
   - [ ] add names to registers
   - [ ] make one big datapath module
   - [ ] do the arrows nodes better
 - [ ] Verilog implementation
-  - [ ] Design structure
+  - [X] Design structure
+  - [ ] FSM block
+    - [ ] FSM_PresentStateFFs
+    - [ ] FSM_NextStateLogic
+    - [ ] idle logic
+  - [ ] Datapath block
+    - [ ] Moves Validator
+    - [ ] Manches Counter
 - [ ] SIS implementation
   - [X] Module Players
   - [X] Module datapath
+  - [ ] Module FSM
+  - [ ] link FSM-D
 - [ ] Testbench
+- [ ] Better naming/code style
 - [ ] Pre-optimization statistics
 - [ ] Post-optimization statistics
 - [ ] Technology Mapping
