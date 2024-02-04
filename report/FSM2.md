@@ -1,0 +1,106 @@
+
+| Valid | min | max | MoveP1  | MoveP2  | OutputWM | OutputWG | State | Target | comment |
+| ----- | --- | --- | ------- | ------- | -------- | -------- | ----- | ------ | ------- |
+| 0     | -   | -   | -       | -       | 00       | 00       | Tie   | Tie    |         |
+| 0     | -   | -   | -       | -       | 00       | 00       | P1_1  | P1_1   |         |
+| 0     | -   | -   | -       | -       | 00       | 00       | P1_2  | P1_2   |         |
+| 0     | -   | -   | -       | -       | 00       | 00       | P2_1  | P2_1   |         |
+| 0     | -   | -   | -       | -       | 00       | 00       | P2_2  | P2_2   |         |
+|       |     |     |         |         |          |          |       |        |         |
+| 1     | -   | 0   | SASSO   | SASSO   | DRAW     | 00       | TIE   | TIE    |         |
+| 1     | -   | 0   | CARTA   | CARTA   | DRAW     | 00       | TIE   | TIE    |         |
+| 1     | -   | 0   | FORBICE | FORBICE | DRAW     | 00       | TIE   | TIE    |         |
+| 1     | -   | 0   | SASSO   | FORBICE | WP1      | 00       | TIE   | P1_1   |         |
+| 1     | -   | 0   | CARTA   | SASSO   | WP1      | 00       | TIE   | P1_1   |         |
+| 1     | -   | 0   | FORBICE | CARTA   | WP1      | 00       | TIE   | P1_1   |         |
+| 1     | -   | 0   | SASSO   | CARTA   | WP2      | 00       | TIE   | P2_1   |         |
+| 1     | -   | 0   | CARTA   | FORBICE | WP2      | 00       | TIE   | P2_1   |         |
+| 1     | -   | 0   | FORBICE | SASSO   | WP2      | 00       | TIE   | P2_1   |         |
+| 1     | -   | 1   | SASSO   | SASSO   | DRAW     | FWPD     | TIE   | TIE    |         |
+| 1     | -   | 1   | CARTA   | CARTA   | DRAW     | FWPD     | TIE   | TIE    |         |
+| 1     | -   | 1   | FORBICE | FORBICE | DRAW     | FWPD     | TIE   | TIE    |         |
+| 1     | -   | 1   | SASSO   | FORBICE | WP1      | FWP1     | TIE   | TIE    |         |
+| 1     | -   | 1   | CARTA   | SASSO   | WP1      | FWP1     | TIE   | TIE    |         |
+| 1     | -   | 1   | FORBICE | CARTA   | WP1      | FWP1     | TIE   | TIE    |         |
+| 1     | -   | 1   | SASSO   | CARTA   | WP2      | FWP2     | TIE   | TIE    |         |
+| 1     | -   | 1   | CARTA   | FORBICE | WP2      | FWP2     | TIE   | TIE    |         |
+| 1     | -   | 1   | FORBICE | SASSO   | WP2      | FWP2     | TIE   | TIE    |         |
+|       |     |     |         |         |          |          |       |        |         |
+| 1     | -   | 0   | SASSO   | SASSO   | DRAW     | 00       | P2_1  | P2_1   |         |
+| 1     | -   | 0   | CARTA   | CARTA   | DRAW     | 00       | P2_1  | P2_1   |         |
+| 1     | -   | 0   | FORBICE | FORBICE | DRAW     | 00       | P2_1  | P2_1   |         |
+| 1     | -   | 0   | SASSO   | FORBICE | WP1      | 00       | P2_1  | TIE    |         |
+| 1     | -   | 0   | CARTA   | SASSO   | WP1      | 00       | P2_1  | TIE    |         |
+| 1     | -   | 0   | FORBICE | CARTA   | WP1      | 00       | P2_1  | TIE    |         |
+| 1     | 0   | 0   | SASSO   | CARTA   | WP2      | 00       | P2_1  | P2_2   |         |
+| 1     | 0   | 0   | CARTA   | FORBICE | WP2      | 00       | P2_1  | P2_2   |         |
+| 1     | 0   | 0   | FORBICE | SASSO   | WP2      | 00       | P2_1  | P2_2   |         |
+| 1     | 1   | 0   | SASSO   | CARTA   | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | 1   | 0   | CARTA   | FORBICE | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | 1   | 0   | FORBICE | SASSO   | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | -   | 1   | SASSO   | SASSO   | DRAW     | FWP2     | P2_1  | TIE    |         |
+| 1     | -   | 1   | CARTA   | CARTA   | DRAW     | FWP2     | P2_1  | TIE    |         |
+| 1     | -   | 1   | FORBICE | FORBICE | DRAW     | FWP2     | P2_1  | TIE    |         |
+| 1     | -   | 1   | SASSO   | FORBICE | WP1      | FWD      | P2_1  | TIE    |         |
+| 1     | -   | 1   | CARTA   | SASSO   | WP1      | FWD      | P2_1  | TIE    |         |
+| 1     | -   | 1   | FORBICE | CARTA   | WP1      | FWD      | P2_1  | TIE    |         |
+| 1     | .   | 1   | SASSO   | CARTA   | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | .   | 1   | CARTA   | FORBICE | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | .   | 1   | FORBICE | SASSO   | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | .   | 1   | SASSO   | CARTA   | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | .   | 1   | CARTA   | FORBICE | WP2      | FWP2     | P2_1  | TIE    |         |
+| 1     | .   | 1   | FORBICE | SASSO   | WP2      | FWP2     | P2_1  | TIE    |         |
+|       |     |     |         |         |          |          |       |        |         |
+| 1     | -   | 0   | SASSO   | SASSO   | DRAW     | 00       | P1_1  | P1_1   |         |
+| 1     | -   | 0   | CARTA   | CARTA   | DRAW     | 00       | P1_1  | P1_1   |         |
+| 1     | -   | 0   | FORBICE | FORBICE | DRAW     | 00       | P1_1  | P1_1   |         |
+| 1     | 0   | 0   | SASSO   | FORBICE | WP1      | 00       | P1_1  | P1_2   |         |
+| 1     | 0   | 0   | CARTA   | SASSO   | WP1      | 00       | P1_1  | P1_2   |         |
+| 1     | 0   | 0   | FORBICE | CARTA   | WP1      | 00       | P1_1  | P1_2   |         |
+| 1     | 1   | 0   | SASSO   | FORBICE | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | 1   | 0   | CARTA   | SASSO   | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | 1   | 0   | FORBICE | CARTA   | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | -   | 0   | SASSO   | CARTA   | WP2      | 00       | P1_1  | TIE    |         |
+| 1     | -   | 0   | CARTA   | FORBICE | WP2      | 00       | P1_1  | TIE    |         |
+| 1     | -   | 0   | FORBICE | SASSO   | WP2      | 00       | P1_1  | TIE    |         |
+| 1     | -   | 1   | SASSO   | SASSO   | DRAW     | FWP1     | P1_1  | TIE    |         |
+| 1     | -   | 1   | CARTA   | CARTA   | DRAW     | FWP1     | P1_1  | TIE    |         |
+| 1     | -   | 1   | FORBICE | FORBICE | DRAW     | FWP1     | P1_1  | TIE    |         |
+| 1     | .   | 1   | SASSO   | FORBICE | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | .   | 1   | CARTA   | SASSO   | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | .   | 1   | FORBICE | CARTA   | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | .   | 1   | SASSO   | FORBICE | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | .   | 1   | CARTA   | SASSO   | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | .   | 1   | FORBICE | CARTA   | WP1      | FWP1     | P1_1  | TIE    |         |
+| 1     | -   | 1   | SASSO   | CARTA   | WP2      | FWPD     | P1_1  | TIE    |         |
+| 1     | -   | 1   | CARTA   | FORBICE | WP2      | FWPD     | P1_1  | TIE    |         |
+| 1     | -   | 1   | FORBICE | SASSO   | WP2      | FWPD     | P1_1  | TIE    |         |
+|       |     |     |         |         |          |          |       |        |         |
+| 1     | 0   | 0   | SASSO   | SASSO   | DRAW     | 00       | P2_2  | P2_2   |         |
+| 1     | 0   | 0   | CARTA   | CARTA   | DRAW     | 00       | P2_2  | P2_2   |         |
+| 1     | 0   | 0   | FORBICE | FORBICE | DRAW     | 00       | P2_2  | P2_2   |         |
+| 1     | 1   | 0   | SASSO   | SASSO   | DRAW     | FWP2     | P2_2  | TIE    |         |
+| 1     | 1   | 0   | CARTA   | CARTA   | DRAW     | FWP2     | P2_2  | TIE    |         |
+| 1     | 1   | 0   | FORBICE | FORBICE | DRAW     | FWP2     | P2_2  | TIE    |         |
+| 1     | -   | 0   | SASSO   | FORBICE | WP1      | 00       | P2_2  | P2_1   |         |
+| 1     | -   | 0   | CARTA   | SASSO   | WP1      | 00       | P2_2  | P2_1   |         |
+| 1     | -   | 0   | FORBICE | CARTA   | WP1      | 00       | P2_2  | P2_1   |         |
+| 1     | 0   | 0   | SASSO   | CARTA   | WP2      | FWP2     | P2_2  | TIE    |         |
+| 1     | 0   | 0   | CARTA   | FORBICE | WP2      | FWP2     | P2_2  | TIE    |         |
+| 1     | 0   | 0   | FORBICE | SASSO   | WP2      | FWP2     | P2_2  | TIE    |         |
+| 1     | -   | 1   | -       | -       | -        | FWP2     | P2_2  | TIE    |         |
+|       |     |     |         |         |          |          |       |        |         |
+| 1     | -   | 0   | SASSO   | SASSO   | DRAW     | FWP1     | P1_2  | TIE    |         |
+| 1     | -   | 0   | CARTA   | CARTA   | DRAW     | FWP1     | P1_2  | TIE    |         |
+| 1     | -   | 0   | FORBICE | FORBICE | DRAW     | FWP1     | P1_2  | TIE    |         |
+| 1     | -   | 0   | SASSO   | SASSO   | DRAW     | 00       | P1_2  | P1_2   |         |
+| 1     | -   | 0   | CARTA   | CARTA   | DRAW     | 00       | P1_2  | P1_2   |         |
+| 1     | -   | 0   | FORBICE | FORBICE | DRAW     | 00       | P1_2  | P2_2   |         |
+| 1     | 0   | 0   | SASSO   | FORBICE | WP1      | FWP1     | P1_2  | TIE    |         |
+| 1     | 0   | 0   | CARTA   | SASSO   | WP1      | FWP1     | P1_2  | TIE    |         |
+| 1     | 0   | 0   | FORBICE | CARTA   | WP1      | FWP1     | P1_2  | TIE    |         |
+| 1     | -   | 0   | SASSO   | CARTA   | WP2      | 00       | P1_2  | P1_1   |         |
+| 1     | -   | 0   | CARTA   | FORBICE | WP2      | 00       | P1_2  | P1_1   |         |
+| 1     | -   | 0   | FORBICE | SASSO   | WP2      | 00       | P1_2  | P1_1   |         |
+| 1     | -   | 1   | -       | -       | WP2      | FWP1     | P1_2  | P1_1   |         |
+
