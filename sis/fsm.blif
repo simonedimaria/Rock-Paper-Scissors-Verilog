@@ -1,6 +1,6 @@
-.model fsm
-.inputs Valid Min Max MoveP11 MoveP10 MoveP21 MoveP20
-.outputs OutputWM1 OutputWM0 OutputWG1 OutputWG0
+.model FSM
+.inputs Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0
+.outputs O_MancheWinner1 O_MancheWinner0 O_GameWinner1 O_GameWinner0
 
 
 .start_kiss
