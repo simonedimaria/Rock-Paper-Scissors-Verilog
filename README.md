@@ -192,8 +192,10 @@ Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/te
 - [ ] Verilog implementation
   - [ ] Design structure
 - [ ] SIS implementation
-  - [ ] Module Player
+  - [ ] Fsm fix case p1_2 and p2_2 to TIE when DRAW
+  - [X] Module Player
   - [X] Module datapath
+- [ ] Fix manches counter  
 - [ ] Testbench
 - [ ] Pre-optimization statistics
 - [ ] Post-optimization statistics
