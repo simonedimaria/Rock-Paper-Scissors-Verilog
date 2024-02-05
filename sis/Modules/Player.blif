@@ -7,20 +7,22 @@
 
 
 #tests:
-#0 1 0 1 1 1 0 0 same move
-#0 1 0 1 1 1 0 0 same move
-#0 1 1 0 1 1 0 0 same move but different last winner
-#0 1 0 1 0 1 0 0 another move but same last winner
+#simulate 0 1 0 1 1 1 0 1 same move
+#simulate 0 1 0 1 1 1 0 0 same move
+#simulate 0 1 1 0 1 1 0 0 same move but different last winner
+#simulate 0 1 0 1 0 1 0 0 another move but same last winner
 .model PLAYER
-.inputs I_Player1 I_Player0 I_LastWinner1 I_LastWinner0   I_Move1  I_Move0 I_InvalidMove1 I_InvalidMove0 I_Reset
+.inputs I_Player1 I_Player0 I_LastWinner1 I_LastWinner0  I_Move1  I_Move0 I_Reset I_Record
 .outputs  O_IsMoveValid  O_Move1 O_Move0
 
 .search Base/Gates/Not_1b.blif
+.search Base/Gates/Nor_2b.blif
 .search Base/Gates/And_2b.blif
 .search Base/Gates/Nand_2b.blif
 .search Base/Registers/RegisterRST_2b.blif
 .search Base/Utils/InputEqualOutput.blif
 .search Base/Comparators/Equal_2b.blif
+.search Base/Mux/Mux_2i2b.blif
 
 #Bring input move to output
 .subckt INPUT_EQUAL_OUTPUT A=I_Move0 O=O_Move0
@@ -28,14 +30,14 @@
 
 
 # Init register last move
-.subckt REGISTER_RST_2b RST=I_Reset  I1=I_Move0 I0=I_Move1 O1=LastMove1 O0=LastMove0
-
+.subckt REGISTER_RST_2b RST=I_Reset  I1=LastSelectedMove1 I0=LastSelectedMove0 O1=LastMove1 O0=LastMove0
+.subckt MUX_2i2b S=I_Record A1=LastMove1 A0=LastMove0  B1=I_Move1 B0=I_Move0 O1=LastSelectedMove1 O0=LastSelectedMove0
 
 
 # Comparisons
-.subckt EQUAL_2b  A1=I_Move0 A0=I_Move1 B1=LastMove1 B0=LastMove0 O=EqualLastMove
+.subckt EQUAL_2b  A1=I_Move1 A0=I_Move0 B1=LastMove1 B0=LastMove0 O=EqualLastMove
 .subckt EQUAL_2b  A1=I_Player1 A0=I_Player0 B1=I_LastWinner1 B0=I_LastWinner0 O=EqualLastWinner
-.subckt EQUAL_2b  A1=I_InvalidMove1 A0=I_InvalidMove0 B1=I_Move1 B0=I_Move0 O=Invalid
+.subckt NOR_2b A=I_Move0 B=I_Move1 O=Invalid
 
 # Logic 
 #| EqualLastMove | EqualLastWinner | Invalid | ¬(EqualLastMove ∧ EqualLastWinner) ∧ ¬Invalid |

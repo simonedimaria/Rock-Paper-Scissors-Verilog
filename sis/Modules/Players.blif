@@ -30,15 +30,15 @@
 
 .subckt LAST_NON_ZERO  I_Value1=I_Winner1 I_Value0=I_Winner0 I_Reset=I_Reset O_LastNonZero1=LastWinner1 O_LastNonZero0=LastWinner0
 #player 1
-.subckt PLAYER  I_Reset=I_Reset I_Player1=ZERO I_Player0=ONE I_LastWinner1=LastWinner1 I_LastWinner0=LastWinner0  I_Move1=I_Player1Move1  I_Move0=I_Player1Move0 I_InvalidMove1=ZERO I_InvalidMove0=ZERO O_IsMoveValid=Valid1  O_Move1=O_Player1Move1 O_Move0=O_Player1Move0
+.subckt PLAYER I_Record=O_AreMovesValid I_Reset=I_Reset I_Player1=ZERO I_Player0=ONE I_LastWinner1=LastWinner1 I_LastWinner0=LastWinner0  I_Move1=I_Player1Move1  I_Move0=I_Player1Move0  O_IsMoveValid=Valid1  O_Move1=O_Player1Move1 O_Move0=O_Player1Move0
 #player 2
-.subckt PLAYER   I_Reset=I_Reset  I_Player1=ONE I_Player0=ZERO I_LastWinner1=LastWinner1 I_LastWinner0=LastWinner0  I_Move1=I_Player2Move1  I_Move0=I_Player2Move0 I_InvalidMove1=ZERO I_InvalidMove0=ZERO O_IsMoveValid=Valid2  O_Move1=O_Player2Move1 O_Move0=O_Player2Move0
+.subckt PLAYER I_Record=O_AreMovesValid  I_Reset=I_Reset  I_Player1=ONE I_Player0=ZERO I_LastWinner1=LastWinner1 I_LastWinner0=LastWinner0  I_Move1=I_Player2Move1  I_Move0=I_Player2Move0  O_IsMoveValid=Valid2  O_Move1=O_Player2Move1 O_Move0=O_Player2Move0
 
 .subckt AND_2b A=Valid1 B=Valid2 O=O_AreMovesValid
 
 
 
 #memory:
-#01     10      01
-#Winner MoveP1  MoveP2
+# 10      01        01    
+# MoveP1  MoveP2    Winner
 .end
