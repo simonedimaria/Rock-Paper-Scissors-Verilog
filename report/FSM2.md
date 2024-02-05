@@ -90,17 +90,17 @@
 | 1     | 0   | 0   | FORBICE | SASSO   | WP2      | FWP2     | P2_2  | TIE    |         |
 | 1     | -   | 1   | -       | -       | -        | FWP2     | P2_2  | TIE    |         |
 |       |     |     |         |         |          |          |       |        |         |
-| 1     | -   | 0   | SASSO   | SASSO   | DRAW     | FWP1     | P1_2  | TIE    |         |
-| 1     | -   | 0   | CARTA   | CARTA   | DRAW     | FWP1     | P1_2  | TIE    |         |
-| 1     | -   | 0   | FORBICE | FORBICE | DRAW     | FWP1     | P1_2  | TIE    |         |
-| 1     | -   | 0   | SASSO   | SASSO   | DRAW     | 00       | P1_2  | P1_2   |         |
-| 1     | -   | 0   | CARTA   | CARTA   | DRAW     | 00       | P1_2  | P1_2   |         |
-| 1     | -   | 0   | FORBICE | FORBICE | DRAW     | 00       | P1_2  | P2_2   |         |
+| 1     | 0   | 0   | SASSO   | SASSO   | DRAW     | 00       | P1_2  | P1_2   |         |
+| 1     | 0   | 0   | CARTA   | CARTA   | DRAW     | 00       | P1_2  | P1_2   |         |
+| 1     | 0   | 0   | FORBICE | FORBICE | DRAW     | 00       | P1_2  | P1_2   |         |
+| 1     | 1   | 0   | SASSO   | SASSO   | DRAW     | FWP1     | P1_2  | TIE    |         |
+| 1     | 1   | 0   | CARTA   | CARTA   | DRAW     | FWP1     | P1_2  | TIE    |         |
+| 1     | 1   | 0   | FORBICE | FORBICE | DRAW     | FWP1     | P1_2  | TIE    |         |
 | 1     | 0   | 0   | SASSO   | FORBICE | WP1      | FWP1     | P1_2  | TIE    |         |
 | 1     | 0   | 0   | CARTA   | SASSO   | WP1      | FWP1     | P1_2  | TIE    |         |
 | 1     | 0   | 0   | FORBICE | CARTA   | WP1      | FWP1     | P1_2  | TIE    |         |
 | 1     | -   | 0   | SASSO   | CARTA   | WP2      | 00       | P1_2  | P1_1   |         |
 | 1     | -   | 0   | CARTA   | FORBICE | WP2      | 00       | P1_2  | P1_1   |         |
 | 1     | -   | 0   | FORBICE | SASSO   | WP2      | 00       | P1_2  | P1_1   |         |
-| 1     | -   | 1   | -       | -       | WP2      | FWP1     | P1_2  | P1_1   |         |
+| 1     | -   | 1   | -       | -       | WP2      | FWP1     | P1_2  | TIE    |         |
 
