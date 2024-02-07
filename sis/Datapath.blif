@@ -18,6 +18,7 @@
 .search Base/Constants/One_1b.blif
 .search Base/Constants/Zero_1b.blif
 .search Base/Gates/And_2b.blif
+
 .search Base/Registers/Register_2b.blif
 
 
@@ -39,10 +40,11 @@
 .subckt EQUAL_5b A4=ZERO A3=ZERO A2=ONE A1=ZERO A0=ZERO B4=NMatch4 B3=NMatch3 B2=NMatch2 B1=NMatch1 B0=NMatch0 O=O_Min
 
 #Max matches
-.subckt EQUAL_5b A4=MaxManches4 A3=MaxManches3 A2=MaxManches2 A1=MaxManches1 A0=MaxManches0 B4=NMatch4 B3=NMatch3 B2=NMatch2 B1=NMatch1 B0=NMatch0 O=O_Max
+.subckt EQUAL_5b A4=MaxManches4 A3=MaxManches3 A2=MaxManches2 A1=MaxManches1 A0=MaxManches0 B4=NMatch4 B3=NMatch3 B2=NMatch2 B1=NMatch1 B0=NMatch0 O=Max
 
 
 .subckt MUX_2i1b S=INIZIA  I1=ValidMoves I0=ZERO O=O_AreMovesValid
+.subckt MUX_2i1b S=INIZIA  I1=Max I0=ZERO O=O_Max
 .subckt MUX_2i2b S=ValidMoves  A1=ZERO A0=ZERO  B1=I_MancheWinner1 B0=I_MancheWinner0 O1=MANCHE1 O0=MANCHE0
 .subckt MUX_2i2b S=O_Min  A1=ZERO A0=ZERO  B1=LastNonZero1 B0=LastNonZero0 O1=PARTITA1 O0=PARTITA0
 
