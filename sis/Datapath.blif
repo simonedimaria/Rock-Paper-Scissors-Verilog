@@ -44,7 +44,7 @@
 
 
 .subckt MUX_2i1b S=INIZIA  I1=ValidMoves I0=ZERO O=O_AreMovesValid
-.subckt MUX_2i1b S=INIZIA  I1=Max I0=ZERO O=O_Max
+.subckt MUX_2i1b S=INIZIA  I1=Max I0=ONE O=O_Max
 .subckt MUX_2i2b S=ValidMoves  A1=ZERO A0=ZERO  B1=I_MancheWinner1 B0=I_MancheWinner0 O1=MANCHE1 O0=MANCHE0
 .subckt MUX_2i2b S=O_Min  A1=ZERO A0=ZERO  B1=LastNonZero1 B0=LastNonZero0 O1=PARTITA1 O0=PARTITA0
 
