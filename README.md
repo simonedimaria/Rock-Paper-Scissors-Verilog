@@ -150,30 +150,34 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 # 6. Notes
 
 ## 6.1) Design choices
+
 > **Difficoltà 1**:  
 > Identificazione segnali di controllo che vengono prodotti dalla FSM e che pilotano la selezione dei dati nel DataPath.
-
 **Soluzione**: [...]
 
 > **Difficoltà 2**:  
 > Generazione da parte del DataPath di quei segnali di condizione che vincolano l'evoluzione tra gli stati della FSM
-
 **Soluzione**: [...]
 
 > **Design Choice 1**:   
 > XNOR module or CMP module for comparisons (i.e. `manches>=4`, `manches<=19`, ...)
-
 [...]
 
 > **Design Choice 2**:   
 > Which code styleguide for Verilog?
-
 [lowRISC Verilog Coding Style](https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md)
 
 > **Design Choice 3**:
 > What bit encoding to use for FSM states / Moves?
-
 Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/technical-articles/encoding-the-states-of-a-finite-state-machine-vhdl/
+
+> **Design Choice 4**:   
+> `<=` or `=` for reg in verilog?
+[...]
+
+> **Design Choice 5**:   
+> `always @()` or `always_comb` or `always_ff` in verilog?
+[...]
 
 ---
 # 7. TO-DO
@@ -200,6 +204,7 @@ Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/te
   - [ ] Datapath block
     - [ ] Moves Validator
     - [ ] Manches Counter
+  - [ ] rework events handling
 - [ ] SIS implementation
   - [X] Module Players
   - [X] Module datapath
