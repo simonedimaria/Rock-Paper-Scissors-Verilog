@@ -1,0 +1,19 @@
+pi= 5	po= 4	nodes=146	latches=23 lits(sop)= 819
+pi= 5	po= 4	nodes= 80	latches=23 lits(sop)= 617
+pi= 5	po= 4	nodes= 35	latches=23 lits(sop)=1000
+pi= 5	po= 4	nodes= 35	latches=23 lits(sop)= 923
+pi= 5	po= 4	nodes= 35	latches=23 lits(sop)= 912
+pi= 5	po= 4	nodes= 39	latches=23 lits(sop)= 521
+pi= 5	po= 4	nodes= 39	latches=23 lits(sop)= 521
+pi= 5	po= 4	nodes= 39	latches=23 lits(sop)= 521
+pi= 5	po= 4	nodes= 39	latches=23 lits(sop)= 521
+pi= 5	po= 4	nodes= 43	latches=23 lits(sop)= 452
+pi= 5	po= 4	nodes= 43	latches=23 lits(sop)= 452
+pi= 5	po= 4	nodes= 44	latches=23 lits(sop)= 441
+pi= 5	po= 4	nodes= 44	latches=23 lits(sop)= 441
+pi= 5	po= 4	nodes= 76	latches=23 lits(sop)= 358
+pi= 5	po= 4	nodes= 76	latches=23 lits(sop)= 354
+pi= 5	po= 4	nodes= 84	latches=23 lits(sop)= 340
+pi= 5	po= 4	nodes= 84	latches=23 lits(sop)= 340
+pi= 5	po= 4	nodes= 60	latches=23 lits(sop)= 422
+pi= 5	po= 4	nodes= 91	latches=23 lits(sop)= 342

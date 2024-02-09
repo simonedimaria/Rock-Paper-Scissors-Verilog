@@ -1,0 +1,308 @@
+.model FSM
+.inputs Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0
+.outputs O_MancheWinner1 O_MancheWinner0 O_GameWinner1 O_GameWinner0
+.latch    [6034] LatchOut_v7   0
+.latch    [6035] LatchOut_v8   0
+.latch    [6036] LatchOut_v9   0
+.start_kiss
+.i 7
+.o 4
+.p 113
+.s 5
+.r TIE
+0------ TIE TIE 0000
+1-00101 TIE TIE 1100
+1-01010 TIE TIE 1100
+1-01111 TIE TIE 1100
+1-00111 TIE P1_1 0100
+1-01001 TIE P1_1 0100
+1-01110 TIE P1_1 0100
+1-00110 TIE P2_1 1000
+1-01011 TIE P2_1 1000
+1-01101 TIE P2_1 1000
+1-10101 TIE TIE 1111
+1-11010 TIE TIE 1111
+1-11111 TIE TIE 1111
+1-10111 TIE TIE 0101
+1-11001 TIE TIE 0101
+1-11110 TIE TIE 0101
+1-10110 TIE TIE 1010
+1-11011 TIE TIE 1010
+1-11101 TIE TIE 1010
+0------ P1_1 P1_1 0000
+1-00101 P1_1 P1_1 1100
+1-01010 P1_1 P1_1 1100
+1-01111 P1_1 P1_1 1100
+1000111 P1_1 P1_1 0100
+1001001 P1_1 P1_1 0100
+1001110 P1_1 P1_1 0100
+1100111 P1_1 TIE 0101
+1101001 P1_1 TIE 0101
+1101110 P1_1 TIE 0101
+1-00110 P1_1 TIE 1000
+1-01011 P1_1 TIE 1000
+1-01101 P1_1 TIE 1000
+1-10101 P1_1 TIE 1101
+1-11010 P1_1 TIE 1101
+1-11111 P1_1 TIE 1101
+1-10111 P1_1 TIE 0101
+1-11001 P1_1 TIE 0101
+1-11110 P1_1 TIE 0101
+1-10111 P1_1 TIE 0101
+1-11001 P1_1 TIE 0101
+1-11110 P1_1 TIE 0101
+1-10110 P1_1 TIE 1011
+1-11011 P1_1 TIE 1011
+1-11101 P1_1 TIE 1011
+0------ P2_1 P2_1 0000
+1-00101 P2_1 P2_1 1100
+1-01010 P2_1 P2_1 1100
+1-01111 P2_1 P2_1 1100
+1-00111 P2_1 TIE 0100
+1-01001 P2_1 TIE 0100
+1-01110 P2_1 TIE 0100
+1000110 P2_1 P2_2 1000
+1001011 P2_1 P2_2 1000
+1001101 P2_1 P2_2 1000
+1100110 P2_1 TIE 1010
+1101011 P2_1 TIE 1010
+1101101 P2_1 TIE 1010
+1-10101 P2_1 TIE 1110
+1-11010 P2_1 TIE 1110
+1-11111 P2_1 TIE 1110
+1-10111 P2_1 TIE 0111
+1-11001 P2_1 TIE 0111
+1-11110 P2_1 TIE 0111
+1-10110 P2_1 TIE 1010
+1-11011 P2_1 TIE 1010
+1-11101 P2_1 TIE 1010
+1-10110 P2_1 TIE 1010
+1-11011 P2_1 TIE 1010
+1-11101 P2_1 TIE 1010
+0------ P2_2 P2_2 0000
+1000101 P2_2 P2_2 1100
+1001010 P2_2 P2_2 1100
+1001111 P2_2 P2_2 1100
+1100101 P2_2 TIE 1110
+1101010 P2_2 TIE 1110
+1101111 P2_2 TIE 1110
+1-00111 P2_2 P2_1 0100
+1-01001 P2_2 P2_1 0100
+1-01110 P2_2 P2_1 0100
+1000110 P2_2 TIE 1010
+1001011 P2_2 TIE 1010
+1001101 P2_2 TIE 1010
+1-10101 P2_2 TIE 1110
+1-11010 P2_2 TIE 1110
+1-11111 P2_2 TIE 1110
+1-10111 P2_2 TIE 0110
+1-11001 P2_2 TIE 0110
+1-11110 P2_2 TIE 0110
+1-10110 P2_2 TIE 1010
+1-11011 P2_2 TIE 1010
+1-11101 P2_2 TIE 1010
+0------ P1_2 P1_1 0000
+1100101 P1_2 TIE 1101
+1101010 P1_2 TIE 1101
+1101111 P1_2 TIE 1101
+1000101 P1_2 P1_2 1100
+1001010 P1_2 P1_2 1100
+1001111 P1_2 P1_2 1100
+1100111 P1_2 TIE 0101
+1101001 P1_2 TIE 0101
+1101110 P1_2 TIE 0101
+1-00110 P1_2 P1_1 1000
+1-01011 P1_2 P1_1 1000
+1-01101 P1_2 P1_1 1000
+1-10101 P1_2 TIE 1101
+1-11010 P1_2 TIE 1101
+1-11111 P1_2 TIE 1101
+1-10111 P1_2 TIE 0101
+1-11001 P1_2 TIE 0101
+1-11110 P1_2 TIE 0101
+1-10110 P1_2 TIE 1001
+1-11011 P1_2 TIE 1001
+1-11101 P1_2 TIE 1001
+.end_kiss
+.latch_order LatchOut_v7 LatchOut_v8 LatchOut_v9
+.code TIE 000
+.code P1_1 100
+.code P2_1 010
+.code P2_2 001
+.code P1_2 110
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 [6034]
+0------1-- 1
+-00-00-1-- 1
+-000--11-- 1
+--00--011- 1
+--00-0-10- 1
+--0-0-010- 1
+-00111-1-- 1
+--0110-11- 1
+--0-01111- 1
+100-0-011- 1
+--0111110- 1
+1-0-00-000 1
+1-00-11000 1
+1-011-0000 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 [6035]
+0------01- 1
+--00-0-01- 1
+--0-0-001- 1
+1-0-00---1 1
+1000-0--1- 1
+1-00-11--1 1
+1-011-0--1 1
+100-0-011- 1
+--0111101- 1
+1-00--0000 1
+100-11111- 1
+1-0110-000 1
+1-0-011000 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 [6036]
+0--------1 1
+-000-0---1 1
+-00-0-0--1 1
+1000--001- 1
+-001111--1 1
+100110-01- 1
+100-01101- 1
+.names Valid Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+O_MancheWinner1
+1-01- 1
+1-10- 1
+10--0 1
+11111 1
+.names Valid Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+O_MancheWinner0
+1-00- 1
+10--1 1
+11--0 1
+11111 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 O_GameWinner1
+1-1------1 1
+1-1----01- 1
+1--0--0--1 1
+1-10--0-0- 1
+11-0-0---1 1
+1--110---1 1
+1---011--1 1
+11--0-0--1 1
+11-0--001- 1
+1-1110--0- 1
+1-1-011-0- 1
+11-1-11--1 1
+11-110-01- 1
+11--01101- 1
+1-10-0-000 1
+1-1-0-0000 1
+1-11111000 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 O_GameWinner0
+1-1----1-- 1
+11--00-1-- 1
+1-1-00---0 1
+11-0-111-- 1
+11-11-01-- 1
+11-0-0-11- 1
+11--0-011- 1
+1-10-11--0 1
+1-111-0--0 1
+11--11111- 1
+1-10-0-000 1
+1-1-0-0000 1
+1-11111000 1
+.exdc 
+.inputs Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9
+.outputs [6034] [6035] [6036] O_MancheWinner1 O_MancheWinner0 O_GameWinner1 \
+O_GameWinner0
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 [6034]
+-------1-1 1
+--------11 1
+1--00----- 1
+1----00--- 1
+1100--0--1 1
+100-00-11- 1
+110110---1 1
+110-011--1 1
+1000-1111- 1
+10011-011- 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 [6035]
+-------1-1 1
+--------11 1
+1--00----- 1
+1----00--- 1
+1100--0--1 1
+100-00-11- 1
+110110---1 1
+110-011--1 1
+1000-1111- 1
+10011-011- 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 [6036]
+-------1-1 1
+--------11 1
+1--00----- 1
+1----00--- 1
+1100--0--1 1
+100-00-11- 1
+110110---1 1
+110-011--1 1
+1000-1111- 1
+10011-011- 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 O_MancheWinner1
+-------1-1 1
+--------11 1
+1--00----- 1
+1----00--- 1
+1100--0--1 1
+100-00-11- 1
+110110---1 1
+110-011--1 1
+1000-1111- 1
+10011-011- 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 O_MancheWinner0
+-------1-1 1
+--------11 1
+1--00----- 1
+1----00--- 1
+1100--0--1 1
+100-00-11- 1
+110110---1 1
+110-011--1 1
+1000-1111- 1
+10011-011- 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 O_GameWinner1
+-------1-1 1
+--------11 1
+1--00----- 1
+1----00--- 1
+1100--0--1 1
+100-00-11- 1
+110110---1 1
+110-011--1 1
+1000-1111- 1
+10011-011- 1
+.names Valid Min Max Player1Move1 Player1Move0 Player2Move1 Player2Move0 \
+LatchOut_v7 LatchOut_v8 LatchOut_v9 O_GameWinner0
+-------1-1 1
+--------11 1
+1--00----- 1
+1----00--- 1
+1100--0--1 1
+100-00-11- 1
+110110---1 1
+110-011--1 1
+1000-1111- 1
+10011-011- 1
+.end

@@ -206,10 +206,12 @@ Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/te
     - [ ] Manches Counter
   - [ ] rework events handling
 - [ ] SIS implementation
-  - [X] Module Players
+  - [ ] Fsm fix case p1_2 and p2_2 to TIE when DRAW
+  - [X] Module Player
   - [X] Module datapath
   - [ ] Module FSM
   - [ ] link FSM-D
+- [ ] Fix manches counter  
 - [ ] Testbench
 - [ ] Better naming/code style
 - [ ] Pre-optimization statistics

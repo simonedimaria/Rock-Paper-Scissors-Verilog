@@ -1,0 +1,44 @@
+rl FSMD.blif
+
+
+print_stats
+sweep
+print_stats
+eliminate 5
+print_stats
+simplify -m nocomp -d
+print_stats
+resub -a
+print_stats
+
+gkx -abt 30
+print_stats
+resub -a; sweep
+print_stats
+gcx -bt 30
+print_stats
+resub -a; sweep
+print_stats
+
+gkx -abt 10
+print_stats
+resub -a; sweep
+print_stats
+gcx -bt 10
+print_stats
+resub -a; sweep
+print_stats
+
+gkx -ab
+print_stats
+resub -a; sweep
+print_stats
+gcx -b
+print_stats
+resub -a; sweep
+print_stats
+
+eliminate 0
+print_stats
+decomp -g *
+print_stats
