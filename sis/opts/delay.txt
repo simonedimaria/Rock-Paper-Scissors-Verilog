@@ -1,0 +1,39 @@
+rl FSMD.blif
+
+print_stats
+sweep
+print_stats
+decomp -q
+print_stats
+tech_decomp -o 2
+print_stats
+resub -a -d
+print_stats
+sweep
+print_stats
+reduce_depth -b -r
+print_stats
+
+#breakes
+#red_removal 
+#print_stats
+eliminate -l 100 -1
+print_stats
+simplify -l
+print_stats
+full_simplify -l
+print_stats
+sweep
+print_stats
+decomp -q
+print_stats
+fx -l
+print_stats
+tech_decomp -o 2
+print_stats
+rlib lib2.genlib
+print_stats
+rlib -a lib2_latch.genlib
+print_stats
+map -s -n 1 -AFG -p
+print_stats

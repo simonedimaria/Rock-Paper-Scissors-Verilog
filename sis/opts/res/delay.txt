@@ -1,0 +1,9 @@
+pi= 5	po= 4	nodes=146	latches=23 lits(sop)= 819
+pi= 5	po= 4	nodes= 80	latches=23 lits(sop)= 617
+pi= 5	po= 4	nodes=115	latches=23 lits(sop)= 467
+pi= 5	po= 4	nodes=367	latches=23 lits(sop)= 716
+pi= 5	po= 4	nodes=367	latches=23 lits(sop)= 634
+pi= 5	po= 4	nodes=285	latches=23 lits(sop)= 552
+pi= 5	po= 4	nodes= 57	latches=23 lits(sop)=2355
+
+#nothing after 10 minutes
