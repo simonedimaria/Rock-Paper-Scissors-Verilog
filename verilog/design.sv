@@ -30,7 +30,7 @@ module MorraCinese (
   localparam bit [1:0]  NOT_ENDED = 2'b00,
                         P1_WINNER = 2'b01,
                         P2_WINNER = 2'b10,
-                        NO_WINNER = 2'b11;
+                        DRAW      = 2'b11;
   //-----------------------------------------     
   //----- FSM states (one-hot encoding) -----
   parameter P1_W2 = 5'b00001,
@@ -98,10 +98,10 @@ module MorraCinese (
   
   always_ff @(posedge clk) begin: ALU_RoundsCounter
     if (INIZIA) begin 
-      max_manches      = min_manches + {PRIMO,SECONDO};
-      manches_played   = 0;
-      last_p1_move     = INVALID;
-      last_p2_move     = INVALID;
+      max_manches    = min_manches + {PRIMO,SECONDO};
+      manches_played = 0;
+      last_p1_move   = INVALID;
+      last_p2_move   = INVALID;
     end
     else begin
       manches_played = (manches_played + moves_are_valid); // will increase iff moves_are_valid is 1
@@ -122,12 +122,12 @@ module MorraCinese (
     end
     else begin
       current_state <= next_state; // maybe broken with always_comb 
-      MANCHE <= manche_winner;
+      MANCHE <= manche_winner;     // somehow broken, im mad.
       if (moves_are_valid) begin
         last_p1_move <= PRIMO;
         last_p2_move <= SECONDO;
       end
-      if (tmp_game_winner != NOT_ENDED) game_winner <= tmp_game_winner;    
+      if (tmp_game_winner != NOT_ENDED) game_winner <= tmp_game_winner; // broken too :(
       if (played_min) begin
         if      (game_winner) PARTITA <= game_winner;
         else if (played_max)  PARTITA <= leading_player;
