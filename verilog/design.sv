@@ -10,12 +10,13 @@ module MorraCinese (
   input  logic  [1:0]  SECONDO, // Player 2 input move
   input  logic         INIZIA,  // Restart the game
   output logic  [1:0]  MANCHE,  // Result of the last round
-  output logic  [1:0]  PARTITA, // Result of the entire game
-  //output logic [4:0] max_manches, manches_played,
-  //output logic [4:0] current_state,  next_state,
-  //output logic       moves_are_valid,
-  //output logic       played_max, played_min,
-  //output logic [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move
+  output logic  [1:0]  PARTITA  // Result of the entire game
+  ,
+  output logic [4:0] max_manches, manches_played,
+  output logic [4:0] current_state,  next_state,
+  output logic       moves_are_valid,
+  output logic       played_max, played_min,
+  output logic [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move
 );
 
   //----------- Internal Constants -----------
@@ -39,12 +40,6 @@ module MorraCinese (
             P2_W2 = 5'b10000;
   //-----------------------------------------
   //------------- Players Moves -------------
-  typedef enum bit [1:0] {
-    ROCK      = 2'b01,
-    PAPER     = 2'b11,
-    SCISSORS  = 2'b10
-  } move_id;
-
   class Move;
     bit [1:0] strong_to;
     bit [1:0] weak_to;
@@ -62,17 +57,25 @@ module MorraCinese (
       return (move == weak_to);
     endfunction
   endclass
-  
+
+  typedef enum bit [1:0] {
+    ROCK      = 2'b01,
+    PAPER     = 2'b11,
+    SCISSORS  = 2'b10
+  } move_id;
+
+  Move moves [move_id];
+  //-----------------------------------------
   //---------- Internal Registers -----------
-  reg [4:0] max_manches, manches_played;
-  reg [4:0] current_state, next_state;
-  reg       moves_are_valid,
-  reg       played_max, played_min,
-  reg [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move
+  //reg [4:0] max_manches, manches_played;
+  //reg [4:0] current_state, next_state;
+  //reg       moves_are_valid;
+  //reg       played_max, played_min;
+  //reg [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move;
   //-----------------------------------------
   //------------ Constructor ----------------
   initial begin
-    Move moves [move_id];
+    //moves[INVALID]  = new(INVALID,    INVALID); // [0,0] is invalid
     moves[ROCK]     = new(SCISSORS,   PAPER);
     moves[PAPER]    = new(ROCK,       SCISSORS);
     moves[SCISSORS] = new(PAPER,      ROCK);
@@ -84,8 +87,8 @@ module MorraCinese (
   //  ALU Datapath  //
   ////////////////////
   
-  always_ff @(posedge clk) begin: ALU_MoveValidator
-    //$monitor("@ALU_MoveValidator: moves_are_valid changed to %b", moves_are_valid);
+  always_ff @(PRIMO or SECONDO) begin: ALU_MoveValidator
+    //$monitor("@[t:%0t][clk:%b]: INIZIA:%b, PRIMO:%b, SECONDO:%b, moves_are_valid:%b", $time, clk, INIZIA, PRIMO, SECONDO, moves_are_valid);
     if (INIZIA)  moves_are_valid = 1'b0;
     else         moves_are_valid = (PRIMO != INVALID) && (SECONDO != INVALID)
                                   && !( (last_p1_move == PRIMO)   && (manche_winner == PLAYER1) )
@@ -141,7 +144,7 @@ module MorraCinese (
     tmp_game_winner = 2'bx;
 
     if (moves_are_valid) begin
-      unique case (current_state)
+      case (current_state)
         START:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = P1_W1; leading_player = PLAYER1; manche_winner = PLAYER1; tmp_game_winner = NOT_ENDED; end
                 else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = P2_W1; leading_player = PLAYER2; manche_winner = PLAYER2; tmp_game_winner = NOT_ENDED; end
                 else                                      begin next_state = START; leading_player = NONE;    manche_winner = NONE;    tmp_game_winner = NOT_ENDED; end

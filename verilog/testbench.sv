@@ -1,7 +1,6 @@
 `timescale 1ns / 1ns
 
 module MorraCinese_tb;
-  
   reg        clk;
   reg [1:0]  PRIMO;
   reg [1:0]  SECONDO;
@@ -10,20 +9,20 @@ module MorraCinese_tb;
   wire [1:0] PARTITA;
   
   reg [4:0] max_manches, manches_played;
-  reg [4:0] current_state,  next_state;
+  reg [4:0] current_state, next_state;
   reg       moves_are_valid;
   reg       played_max, played_min;
   reg [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move;
   
   // Instantiate the Design Under Test (DUT)
-
   MorraCinese dut (
     .clk    (clk),
     .PRIMO  (PRIMO),
     .SECONDO(SECONDO),
     .INIZIA (INIZIA),
     .MANCHE (MANCHE),
-    .PARTITA(PARTITA),
+    .PARTITA(PARTITA)
+    ,
     .max_manches  (max_manches),
     .manches_played (manches_played),
     .current_state(current_state),
