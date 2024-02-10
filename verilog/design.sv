@@ -60,8 +60,8 @@ module MorraCinese (
 
   typedef enum bit [1:0] {
     ROCK      = 2'b01,
-    PAPER     = 2'b11,
-    SCISSORS  = 2'b10
+    PAPER     = 2'b10,
+    SCISSORS  = 2'b11
   } move_id;
 
   Move moves [move_id];
