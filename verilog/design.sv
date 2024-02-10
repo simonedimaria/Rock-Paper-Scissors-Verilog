@@ -5,7 +5,6 @@
 //-----------------------------------------------------
 
 module MorraCinese (
-  // @NOTE: no suffixes
   input  logic         clk,
   input  logic  [1:0]  PRIMO,   // Player 1 input move
   input  logic  [1:0]  SECONDO, // Player 2 input move
@@ -113,8 +112,7 @@ module MorraCinese (
   //  FSM  //
   ///////////
 
-  // Sequential logic must use non-blocking assignments. Combinational blocks must use blocking assignments.
-  always_ff @(posedge clk) begin: FSM_PresentStateFFs //seq --> non blocking, clocked, always_ff?
+  always_ff @(posedge clk) begin: FSM_PresentStateFFs
     // ---- rst signal ----
     if (INIZIA) begin 
       current_state <= START; // reset the FSM
@@ -136,7 +134,7 @@ module MorraCinese (
     end 
   end
 
-  always_comb begin: FSM_NextStateLogic //comb, always_comb?
+  always_comb begin: FSM_NextStateLogic
     next_state      = 5'bx; // go unknown if not all state transitions have been explicitly assigned below
     leading_player  = 2'bx;
     manche_winner   = 2'bx;

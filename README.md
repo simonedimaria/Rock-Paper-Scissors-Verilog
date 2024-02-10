@@ -176,8 +176,14 @@ Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/te
 [...]
 
 > **Design Choice 5**:   
+> suffixes or not suffixes for Verilog vars?
+No suffixes to be consistent with the lineguides IO that does not have any prefixes (`_i`, `_o`, ...).
+
+> **Design Choice 6**:   
 > `always @()` or `always_comb` or `always_ff` in verilog?
-[...]
+Yes, because of purely combinational and sequential blocks.  
+- Sequential logic: `always_ff`, clocked, must use non-blocking assignments `<=`.  
+- Combinational logic: `always_comb`, must use blocking assignments `=`.
 
 ---
 # 7. TO-DO
