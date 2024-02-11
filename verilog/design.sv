@@ -11,16 +11,18 @@ module MorraCinese (
   input  logic         INIZIA,  // Restart the game
   output logic  [1:0]  MANCHE,  // Result of the last round
   output logic  [1:0]  PARTITA  // Result of the entire game
-  ,
+  ,// for debugging purposes
   output logic [4:0] max_manches, manches_played,
   output logic [4:0] current_state,  next_state,
   output logic       moves_are_valid,
   output logic       played_max, played_min,
-  output logic [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move
+  output logic [1:0] manche_winner, leading_player, tmp_game_winner, early_winner,
+  output reg   [1:0] last_p1_move, last_p2_move
+  
 );
 
   //----------- Internal Constants -----------
-  localparam int        min_manches = 4;
+  localparam int        MIN_MANCHES = 4;
 
   localparam bit [1:0]  INVALID = 2'b00,
                         PLAYER1 = 2'b01,
@@ -71,11 +73,13 @@ module MorraCinese (
   //reg [4:0] current_state, next_state;
   //reg       moves_are_valid;
   //reg       played_max, played_min;
-  //reg [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move;
+  //reg [1:0] manche_winner, leading_player, tmp_game_winner, last_p1_move, last_p2_move;
+  //reg [1:0] last_p1_move, last_p2_move;
+  reg [1:0] last_manche_winner, last_game_winner;
   //-----------------------------------------
   //------------ Constructor ----------------
   initial begin
-    //moves[INVALID]  = new(INVALID,    INVALID); // [0,0] is invalid
+    moves[INVALID]  = new(INVALID,    INVALID); // [0,0] is invalid to avoid SIGSEGV in FSM_NextStateLogic
     moves[ROCK]     = new(SCISSORS,   PAPER);
     moves[PAPER]    = new(ROCK,       SCISSORS);
     moves[SCISSORS] = new(PAPER,      ROCK);
@@ -87,26 +91,32 @@ module MorraCinese (
   //  ALU Datapath  //
   ////////////////////
   
-  always_ff @(PRIMO or SECONDO) begin: ALU_MoveValidator
-    //$monitor("@[t:%0t][clk:%b]: INIZIA:%b, PRIMO:%b, SECONDO:%b, moves_are_valid:%b", $time, clk, INIZIA, PRIMO, SECONDO, moves_are_valid);
-    if (INIZIA)  moves_are_valid = 1'b0;
-    else         moves_are_valid = (PRIMO != INVALID) && (SECONDO != INVALID)
-                                  && !( (last_p1_move == PRIMO)   && (manche_winner == PLAYER1) )
-                                  && !( (last_p2_move == SECONDO) && (manche_winner == PLAYER2) );
+always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
+    if (INIZIA)  moves_are_valid <= 1'b0;
+    else begin
+      moves_are_valid <= (PRIMO != INVALID) && (SECONDO != INVALID)
+                        && !( (last_p1_move == PRIMO)   && (last_manche_winner == PLAYER1) )
+                        && !( (last_p2_move == SECONDO) && (last_manche_winner == PLAYER2) );
+    end
     // moves_are_valid will be 1 iff all conditions are met
   end
   
   always_ff @(posedge clk) begin: ALU_RoundsCounter
     if (INIZIA) begin 
-      max_manches    = min_manches + {PRIMO,SECONDO};
+      max_manches    = MIN_MANCHES + {PRIMO,SECONDO};
       manches_played = 0;
       last_p1_move   = INVALID;
       last_p2_move   = INVALID;
     end
     else begin
-      manches_played = (manches_played + moves_are_valid); // will increase iff moves_are_valid is 1
-      played_min     = (manches_played >= min_manches);
-      played_max     = (manches_played > max_manches);     // once [...] @TO-DO
+      manches_played = (manches_played + moves_are_valid); // will increase if moves_are_valid is 1
+      played_min     = (manches_played >= MIN_MANCHES);
+      played_max     = (manches_played > max_manches);     // played_max will be 1 already when starting LR
+      if (moves_are_valid) begin
+        last_p1_move       = PRIMO;
+        last_p2_move       = SECONDO;
+        last_manche_winner = MANCHE;
+      end
     end
   end
 
@@ -115,59 +125,59 @@ module MorraCinese (
   //  FSM  //
   ///////////
 
-  always_ff @(posedge clk or manche_winner or next_state) begin: FSM_PresentStateFFs
-    // ---- rst signal ----
+  always_ff @(posedge clk or posedge INIZIA) begin: FSM_PresentStateFFs
     if (INIZIA) begin 
       current_state <= START; // reset the FSM
-      MANCHE <= INVALID;
+      // [...]?
     end
     else begin
-      current_state <= next_state; // maybe broken with always_comb 
-      MANCHE <= manche_winner;     // somehow broken, im mad.
-      if (moves_are_valid) begin
-        last_p1_move <= PRIMO;
-        last_p2_move <= SECONDO;
-      end
-      if (tmp_game_winner != NOT_ENDED) game_winner <= tmp_game_winner; // broken too :(
-      if (played_min) begin
-        if      (game_winner) PARTITA <= game_winner;
-        else if (played_max)  PARTITA <= leading_player;
-        else                  PARTITA <= NOT_ENDED;
-      end
-      else                    PARTITA <= NOT_ENDED;
-    end 
+      current_state <= next_state;
+    end
   end
 
-  always @(moves_are_valid or PRIMO or SECONDO) begin: FSM_NextStateLogic
-    next_state      = 5'bx; // go unknown if not all state transitions have been explicitly assigned below
-    leading_player  = 2'bx;
-    manche_winner   = 2'bx;
-    tmp_game_winner = 2'bx;
-
+  always_comb begin: FSM_NextStateLogic
     if (moves_are_valid) begin
       case (current_state)
-        START:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = P1_W1; leading_player = PLAYER1; manche_winner = PLAYER1; tmp_game_winner = NOT_ENDED; end
-                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = P2_W1; leading_player = PLAYER2; manche_winner = PLAYER2; tmp_game_winner = NOT_ENDED; end
-                else                                      begin next_state = START; leading_player = NONE;    manche_winner = NONE;    tmp_game_winner = NOT_ENDED; end
-        P1_W1:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = P1_W2; leading_player = PLAYER1; manche_winner = PLAYER1; tmp_game_winner = P1_WINNER; end
-                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = START; leading_player = NONE;    manche_winner = PLAYER2; tmp_game_winner = NOT_ENDED; end
-                else                                      begin next_state = P1_W1; leading_player = PLAYER1; manche_winner = NONE;    tmp_game_winner = NOT_ENDED; end
-        P2_W1:  if      (moves[SECONDO].win_on(PRIMO))    begin next_state = P2_W2; leading_player = PLAYER2; manche_winner = PLAYER2; tmp_game_winner = P2_WINNER; end
-                else if (moves[SECONDO].lose_to(PRIMO))   begin next_state = START; leading_player = NONE;    manche_winner = PLAYER1; tmp_game_winner = NOT_ENDED; end
-                else                                      begin next_state = P2_W1; leading_player = PLAYER2; manche_winner = NONE;    tmp_game_winner = NOT_ENDED; end
-        P1_W2:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = START; leading_player = NONE;    manche_winner = PLAYER1; tmp_game_winner = P1_WINNER; end
-                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = P1_W1; leading_player = PLAYER1; manche_winner = PLAYER2; tmp_game_winner = NOT_ENDED; end
-                else                                      begin next_state = P1_W2; leading_player = PLAYER1; manche_winner = NONE;    tmp_game_winner = P1_WINNER; end
-        P2_W2:  if      (moves[SECONDO].win_on(PRIMO))    begin next_state = START; leading_player = NONE;    manche_winner = PLAYER2; tmp_game_winner = P2_WINNER; end
-                else if (moves[SECONDO].lose_to(PRIMO))   begin next_state = P2_W1; leading_player = PLAYER2; manche_winner = PLAYER1; tmp_game_winner = NOT_ENDED; end
-                else                                      begin next_state = P2_W2; leading_player = PLAYER2; manche_winner = NONE;    tmp_game_winner = P2_WINNER; end
+        START:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = P1_W1; MANCHE = PLAYER1; tmp_game_winner = NOT_ENDED; end
+                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = P2_W1; MANCHE = PLAYER2; tmp_game_winner = NOT_ENDED; end
+                else                                      begin next_state = START; MANCHE = NONE;    tmp_game_winner = NOT_ENDED; end
+        P1_W1:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = P1_W2; MANCHE = PLAYER1; tmp_game_winner = P1_WINNER; end
+                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = START; MANCHE = PLAYER2; tmp_game_winner = NOT_ENDED; end
+                else                                      begin next_state = P1_W1; MANCHE = NONE;    tmp_game_winner = NOT_ENDED; end
+        P2_W1:  if      (moves[SECONDO].win_on(PRIMO))    begin next_state = P2_W2; MANCHE = PLAYER2; tmp_game_winner = P2_WINNER; end
+                else if (moves[SECONDO].lose_to(PRIMO))   begin next_state = START; MANCHE = PLAYER1; tmp_game_winner = NOT_ENDED; end
+                else                                      begin next_state = P2_W1; MANCHE = NONE;    tmp_game_winner = NOT_ENDED; end
+        P1_W2:  if      (moves[PRIMO].win_on(SECONDO))    begin next_state = START; MANCHE = PLAYER1; tmp_game_winner = P1_WINNER; end
+                else if (moves[PRIMO].lose_to(SECONDO))   begin next_state = P1_W1; MANCHE = PLAYER2; tmp_game_winner = NOT_ENDED; end
+                else                                      begin next_state = P1_W2; MANCHE = NONE;    tmp_game_winner = P1_WINNER; end
+        P2_W2:  if      (moves[SECONDO].win_on(PRIMO))    begin next_state = START; MANCHE = PLAYER2; tmp_game_winner = P2_WINNER; end
+                else if (moves[SECONDO].lose_to(PRIMO))   begin next_state = P2_W1; MANCHE = PLAYER1; tmp_game_winner = NOT_ENDED; end
+                else                                      begin next_state = P2_W2; MANCHE = NONE;    tmp_game_winner = P2_WINNER; end
       endcase
     end
-    else begin
-      next_state      = current_state; // @NOTE: bug when reset (inizia 1) and new game it keeps last game current_state
-      manche_winner   = INVALID;
-      leading_player  = INVALID;
+    else begin: idle
+      next_state = current_state; // @NOTE: bug? when reset (inizia 1) and new game it keeps last game current_state
+      MANCHE     = INVALID;
       tmp_game_winner = NOT_ENDED;
+    end
+    
+    // FSM Output Logic
+    if (!played_min) begin
+      if (early_winner) PARTITA = early_winner;
+      else              PARTITA = NOT_ENDED;
+    end
+    else PARTITA = tmp_game_winner;
+
+    if (tmp_game_winner != NOT_ENDED && next_state == START) early_winner = tmp_game_winner;
+
+    if (played_max) begin
+      case (current_state)
+        P1_W2:  PARTITA = P1_WINNER;
+        P1_W1:  PARTITA = P1_WINNER;
+        START:  PARTITA =      DRAW;
+        P2_W1:  PARTITA = P2_WINNER;
+        P2_W2:  PARTITA = P2_WINNER;
+      endcase
     end
   end
 
