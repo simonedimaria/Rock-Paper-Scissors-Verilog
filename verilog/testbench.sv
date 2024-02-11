@@ -12,8 +12,9 @@ module MorraCinese_tb;
   logic [4:0] current_state, next_state;
   logic       moves_are_valid;
   logic       played_max, played_min;
-  logic [1:0] manche_winner, leading_player, tmp_game_winner, game_winner, last_p1_move, last_p2_move;
-  
+  logic [1:0] manche_winner, leading_player, tmp_game_winner, last_p1_move, last_p2_move;
+  integer tbf, outf;
+
   // Instantiate the Design Under Test (DUT)
   MorraCinese dut (
     .clk    (clk),
@@ -22,7 +23,7 @@ module MorraCinese_tb;
     .INIZIA (INIZIA),
     .MANCHE (MANCHE),
     .PARTITA(PARTITA)
-    ,
+    , // for debug purposes
     .max_manches  (max_manches),
     .manches_played (manches_played),
     .current_state(current_state),
@@ -33,7 +34,6 @@ module MorraCinese_tb;
     .manche_winner(manche_winner),
     .leading_player(leading_player),
     .tmp_game_winner(tmp_game_winner),
-    .game_winner(game_winner),
     .last_p1_move(last_p1_move),
     .last_p2_move(last_p2_move)
   );
@@ -59,7 +59,7 @@ module MorraCinese_tb;
 
   // Clock generation:
   // schedule an inversion every 1 ns, giving a clock frequency 1/2ns = 500MHz
-  initial begin
+  initial begin: clock_gen
     clk = 1'b1;
     forever #1 clk = ~clk;
   end
@@ -72,24 +72,35 @@ module MorraCinese_tb;
     input logic [1:0] expected_MANCHE;
     input logic [1:0] expected_PARTITA;
     begin
+      @(posedge clk);
       INIZIA  <= INIZIA_t;
       PRIMO   <= PRIMO_t;
       SECONDO <= SECONDO_t;
-      @(posedge clk);
+      #0.5; // wait input to be processed
       assert (MANCHE  === expected_MANCHE)  else $error("Expected MANCHE:  %b, Received MANCHE:  %b, with inputs: INIZIA:%b, PRIMO:%b, SECONDO:%b", expected_MANCHE, MANCHE, INIZIA, PRIMO, SECONDO);   // @TO-DO: change manche_winner to MANCHE
       assert (PARTITA === expected_PARTITA) else $error("Expected PARTITA: %b, Received PARTITA: %b, with inputs: INIZIA:%b, PRIMO:%b, SECONDO:%b", expected_PARTITA, PARTITA, INIZIA, PRIMO, SECONDO); // may be broken :'(
+      $fdisplay(tbf,"simulate %b %b %b %b %b",INIZIA,  PRIMO[1], PRIMO[0], SECONDO[1],SECONDO[0]);
+      #0.5; // wait input to be processed
+      $fdisplay(outf,"Outputs: %b %b %b %b",  MANCHE[1],MANCHE[0],  PARTITA[1],PARTITA[0]);
     end
   endtask
   
   // Test Cases generation: 
   // waiting 2ns (1 clock cycle) between each round
-  initial begin
+  initial begin: starttest
+    $dumpfile("MorraCinese_tb.vcd");
+    $dumpvars(0, MorraCinese_tb);
+    // Debugging
+    tbf  = $fopen("testbench.script", "w");
+    outf = $fopen("output_verilog.txt", "w");
+    $fdisplay(tbf,"read_blif FSMD.blif");
+
     $monitor("@[t:%0t][clk:%b]    | INPUTS        --> INIZIA:%b, PRIMO:%b, SECONDO:%b\n",  $time, clk, INIZIA, PRIMO, SECONDO,
-             "                 | DP internals  --> max_manches:%b, manches_played:%b, moves_are_valid:%b last_p1_move:%b, last_p2_move:%b, manche_winner:%b, leading_player:%b, tmp_game_winner:%b, game_winner:%b\n", max_manches, manches_played, moves_are_valid, last_p1_move, last_p2_move, manche_winner, leading_player, tmp_game_winner, game_winner,
+             "                 | DP internals  --> max_manches:%b, manches_played:%b, moves_are_valid:%b last_p1_move:%b, last_p2_move:%b, manche_winner:%b, leading_player:%b, tmp_game_winner:%b\n", max_manches, manches_played, moves_are_valid, last_p1_move, last_p2_move, manche_winner, leading_player, tmp_game_winner,
              "                 | FSM internals --> current_state:%b, next_state:%b\n",  current_state, next_state,
              "                 | OUTPUTS       --> MANCHE:%b, PARTITA:%b",            MANCHE, PARTITA
              );
-
+  //$monitor("@[t:%0t] CHANGED moves_are_valid to %b", $time, moves_are_valid);
     // Start
     play_round_and_check(RESTART, 2'b10, 2'b01, INVALID, NOT_ENDED);       // setting n. of rounds to play: PRIMO+SECONDO + 4 = 1001 + 0100 = 13 rounds to play
     //assert_output(INVALID, NOT_ENDED);
@@ -116,17 +127,17 @@ module MorraCinese_tb;
     $display("Round 4");
     
     // Round 5 (1-1)
-    play_round_and_check(PLAY, ROCK, ROCK, NONE, NOT_ENDED);
+    play_round_and_check(PLAY, ROCK, ROCK, INVALID, NOT_ENDED);
     //assert_output(NONE, NOT_ENDED);
     $display("Round 5");
 
     // Round 6 (1-1)
-    play_round_and_check(PLAY, ROCK, ROCK, NONE, NOT_ENDED);
+    play_round_and_check(PLAY, ROCK, ROCK, INVALID, NOT_ENDED);
     //assert_output(NONE, NOT_ENDED);
     $display("Round 6");
 
     // Round 7 (2-1)
-    play_round_and_check(PLAY, PAPER, ROCK, PLAYER1, NOT_ENDED);
+    play_round_and_check(PLAY, PAPER, ROCK, INVALID, NOT_ENDED);
     //assert_output(PLAYER1, NOT_ENDED);
     $display("Round 7");
     
@@ -151,14 +162,12 @@ module MorraCinese_tb;
     //assert_output(PLAYER2, NOT_ENDED);
 
     // Round 4 (1-3)
-    play_round_and_check(PLAY, SCISSORS, PAPER, PLAYER1, NOT_ENDED);
+    play_round_and_check(PLAY, SCISSORS, PAPER, PLAYER1, PLAYER2);
     //assert_output(PLAYER1, P2_WINNER);
     
     // Round 5 [...]
-
-
-    #2    
-    $stop; // Stop simulation
+ 
+    $finish; // Stop simulation
   end
   
 endmodule
