@@ -1,6 +1,6 @@
 .model FSMD 
 .inputs INIZIA PRIMO1 PRIMO0 SECONDO1 SECONDO0 
-.outputs PARTITA1 PARTITA0 MANCHE1 MANCHE0 
+.outputs  MANCHE1 MANCHE0 PARTITA1 PARTITA0
 
 .search fsmN.blif
 .search Datapath.blif
