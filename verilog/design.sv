@@ -87,7 +87,7 @@ module MorraCinese (
   //  ALU Datapath  //
   ////////////////////
   
-  always_ff @(posedge clk) begin: ALU_MoveValidator
+  always_ff @(PRIMO or SECONDO) begin: ALU_MoveValidator
     //$monitor("@[t:%0t][clk:%b]: INIZIA:%b, PRIMO:%b, SECONDO:%b, moves_are_valid:%b", $time, clk, INIZIA, PRIMO, SECONDO, moves_are_valid);
     if (INIZIA)  moves_are_valid = 1'b0;
     else         moves_are_valid = (PRIMO != INVALID) && (SECONDO != INVALID)
@@ -115,10 +115,11 @@ module MorraCinese (
   //  FSM  //
   ///////////
 
-  always_ff @(posedge clk) begin: FSM_PresentStateFFs
+  always_ff @(posedge clk or manche_winner or next_state) begin: FSM_PresentStateFFs
     // ---- rst signal ----
     if (INIZIA) begin 
       current_state <= START; // reset the FSM
+      MANCHE <= INVALID;
     end
     else begin
       current_state <= next_state; // maybe broken with always_comb 
@@ -137,7 +138,7 @@ module MorraCinese (
     end 
   end
 
-  always_comb begin: FSM_NextStateLogic
+  always @(moves_are_valid or PRIMO or SECONDO) begin: FSM_NextStateLogic
     next_state      = 5'bx; // go unknown if not all state transitions have been explicitly assigned below
     leading_player  = 2'bx;
     manche_winner   = 2'bx;
