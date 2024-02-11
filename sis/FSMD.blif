@@ -1,12 +1,218 @@
-.model FSMD 
-.inputs INIZIA PRIMO1 PRIMO0 SECONDO1 SECONDO0 
-.outputs  MANCHE1 MANCHE0 PARTITA1 PARTITA0
-
-.search fsmN.blif
-.search Datapath.blif
-.subckt DATAPATH INIZIA=INIZIA PRIMO1=PRIMO1 PRIMO0=PRIMO0 SECONDO1=SECONDO1 SECONDO0=SECONDO0  I_MancheWinner1=MancheWinner1 I_MancheWinner0=MancheWinner0 I_GameWinner1=GameWinner1 I_GameWinner0=GameWinner0 O_Player1Move1=Player1Move1 O_Player1Move0=Player1Move0 O_Player2Move1=Player2Move1 O_Player2Move0=Player2Move0  O_Min=Min O_Max=Max O_AreMovesValid=Valid PARTITA1=PARTITA1 PARTITA0=PARTITA0 MANCHE1=MANCHE1 MANCHE0=MANCHE0 
-.subckt FSM     Valid=Valid Min=Min Max=Max Player1Move1=Player1Move1 Player1Move0=Player1Move0 Player2Move1=Player2Move1 Player2Move0=Player2Move0 O_MancheWinner1=MancheWinner1 O_MancheWinner0=MancheWinner0 O_GameWinner1=GameWinner1 O_GameWinner0=GameWinner0
-
-
-
+.model FSMD
+.inputs INIZIA PRIMO1 PRIMO0 SECONDO1 SECONDO0
+.outputs MANCHE1 MANCHE0 PARTITA1 PARTITA0
+.latch    [6034] LatchOut_v7   0
+.latch    [6035] LatchOut_v8   0
+.latch    [6036] LatchOut_v9   0
+.latch    MancheWinner1 [407] re NIL 0
+.latch    MancheWinner0 [409] re NIL 0
+.latch    Selected4 MaxManches4 re NIL 0
+.latch    Selected3 MaxManches3 re NIL 0
+.latch    Selected2 MaxManches2 re NIL 0
+.latch    Selected1 MaxManches1 re NIL 0
+.latch    Selected0 O_MaxManches0NF re NIL 0
+.latch    [204] NMatch4 re NIL 0
+.latch    [205] NMatch3 re NIL 0
+.latch    [206] NMatch2 re NIL 0
+.latch    [207] NMatch1 re NIL 0
+.latch    [208] NMatch0 re NIL 0
+.latch    LastNZOrReset1 Reg_LastNZOrReset1 re NIL 0
+.latch    LastNZOrReset0 Reg_LastNZOrReset0 re NIL 0
+.latch    IR LastMove1 re NIL 0
+.latch    [19] LastMove0 re NIL 0
+.latch    [256] [244] re NIL 0
+.latch    [258] [246] re NIL 0
+.latch    [371] [320] re NIL 0
+.latch    [372] [322] re NIL 0
+.names MancheWinner1 MANCHE1
+1 1
+.names MancheWinner0 MANCHE0
+1 1
+.names Min [574] PARTITA1
+11 1
+.names Min [575] PARTITA0
+11 1
+.names PRIMO1 PRIMO0 SECONDO0 [584] [598] [599] MancheWinner1
+-----1 1
+-0-1-- 1
+-1--1- 1
+1-11-- 1
+.names PRIMO1 PRIMO0 SECONDO0 Valid [583] [584] [598] MancheWinner0
+--1-1-- 1
+-0----1 1
+1-01--- 1
+-11--1- 1
+.names MancheWinner1 Max LatchOut_v7 LatchOut_v9 [6035] [6036] [566] [573] \
+[586] GameWinner1
+---1--1-- 1
+110------ 1
+1--1-0--- 1
+---100--- 1
+-1--0--1- 1
+-----011- 1
+-1----1-1 1
+.names MancheWinner0 Min Max Valid LatchOut_v7 LatchOut_v8 LatchOut_v9 [567] \
+[586] GameWinner0
+--111---- 1
+-1--1--1- 1
+--1---01- 1
+1-1-----1 1
+11--11--- 1
+.names NMatch4 NMatch3 NMatch0 [597] Min
+0001 1
+.names INIZIA O_MaxManches0NF MaxManches3 MaxManches2 NMatch3 NMatch2 NMatch0 \
+[558] [563] Max
+1-------- 1
+-11111111 1
+-10101111 1
+-11010111 1
+-10000111 1
+-01111011 1
+-00101011 1
+-01010011 1
+-00000011 1
+.names INIZIA ValidMoves Valid
+01 1
+.names MancheWinner1 MancheWinner0 GameWinner0 LatchOut_v7 LatchOut_v8 [567] \
+[573] [586] [6034]
+-101---- 1
+0--1-0-- 1
+--0-1-0- 1
+--0--1-1 1
+.names MancheWinner1 MancheWinner0 GameWinner0 Max Valid LatchOut_v7 \
+LatchOut_v8 LatchOut_v9 [6034] [566] [567] [573] [583] [586] [6035]
+----0------1-- 1
+---0---1--1--- 1
+------1-1-1-1- 1
+---0-0---1---1 1
+1100--1------- 1
+.names MancheWinner1 MancheWinner0 Min Max Valid LatchOut_v9 [566] [573] \
+[6036]
+----01-- 1
+--00--11 1
+1100-1-- 1
+.names PRIMO1 PRIMO0 SECONDO1 SECONDO0 LastWinner1 LastWinner0 LastMove1 \
+LastMove0 [244] [246] [561] [564] [578] ValidMoves
+--1-----0---1 1
+---1-----0--1 1
+-----1-----11 1
+1---0-0----1- 1
+-1--0--0---1- 1
+----00----11- 1
+--01----1---1 1
+--10-----1--1 1
+01--0-1----1- 1
+10--0--1---1- 1
+.names INIZIA PRIMO1 PRIMO0 MaxManches4 Selected4
+0--1 1
+111- 1
+.names INIZIA PRIMO1 PRIMO0 MaxManches3 Selected3
+0--1 1
+101- 1
+110- 1
+.names INIZIA PRIMO0 MaxManches2 Selected2
+10- 1
+0-1 1
+.names INIZIA SECONDO1 MaxManches1 Selected1
+11- 1
+0-1 1
+.names INIZIA SECONDO0 O_MaxManches0NF Selected0
+11- 1
+0-1 1
+.names INIZIA NMatch4 NMatch3 [205] [208] [204]
+-1-1- 1
+010-- 1
+-0100 1
+.names INIZIA NMatch3 NMatch2 [206] [208] [205]
+-1-1- 1
+010-- 1
+-0100 1
+.names INIZIA Valid NMatch2 NMatch1 [207] [208] [597] [206]
+--1-1-- 1
+0-----1 1
+-101-0- 1
+.names INIZIA NMatch1 [579] [207]
+-00 1
+011 1
+.names Valid NMatch0 [585] [208]
+01- 1
+-00 1
+.names INIZIA [574] LastNZOrReset1
+01 1
+.names INIZIA [575] LastNZOrReset0
+01 1
+.names [407] [409] [320] LastWinner1
+1-- 1
+-01 1
+.names [407] [409] [322] LastWinner0
+-1- 1
+0-1 1
+.names PRIMO1 Valid LastMove1 [585] IR
+11-- 1
+--11 1
+.names PRIMO0 Valid LastMove0 [585] [19]
+11-- 1
+--11 1
+.names [244] [584] [585] [256]
+-1- 1
+1-1 1
+.names SECONDO0 Valid [246] [585] [258]
+11-- 1
+--11 1
+.names INIZIA LastWinner1 [371]
+01 1
+.names INIZIA LastWinner0 [372]
+01 1
+.names MaxManches4 NMatch4 [558]
+11 1
+00 1
+.names [560]
+.names PRIMO1 PRIMO0 [561]
+1- 1
+-1 1
+.names PRIMO1 PRIMO0 SECONDO1 SECONDO0 [562]
+1-0- 1
+-0-1 1
+.names MaxManches1 NMatch1 [563]
+11 1
+00 1
+.names SECONDO1 SECONDO0 [564]
+1- 1
+-1 1
+.names PRIMO1 PRIMO0 SECONDO1 MancheWinner0 [598] [565]
+-0--1 1
+0-11- 1
+.names MancheWinner1 [562] [599] [566]
+--1 1
+11- 1
+.names PRIMO0 SECONDO0 MancheWinner0 [565] [567]
+---1 1
+101- 1
+.names LatchOut_v7 LatchOut_v8 [573]
+01 1
+.names GameWinner1 GameWinner0 Reg_LastNZOrReset1 [574]
+1-- 1
+-01 1
+.names GameWinner1 GameWinner0 Reg_LastNZOrReset0 [575]
+-1- 1
+0-1 1
+.names LastWinner1 [561] [578]
+11 1
+.names NMatch0 [208] [579]
+0- 1
+-1 1
+.names PRIMO1 Valid [583]
+01 1
+.names SECONDO1 Valid [584]
+11 1
+.names INIZIA ValidMoves [585]
+00 1
+.names LatchOut_v8 LatchOut_v9 [586]
+00 1
+.names NMatch2 NMatch1 [597]
+10 1
+.names SECONDO1 Valid [598]
+01 1
+.names SECONDO0 [583] [599]
+01 1
 .end

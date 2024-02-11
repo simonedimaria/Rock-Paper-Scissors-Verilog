@@ -1,0 +1,12 @@
+.model FSMD 
+.inputs INIZIA PRIMO1 PRIMO0 SECONDO1 SECONDO0 
+.outputs  MANCHE1 MANCHE0 PARTITA1 PARTITA0
+
+.search fsmN.blif
+.search Datapath.blif
+.subckt DATAPATH INIZIA=INIZIA PRIMO1=PRIMO1 PRIMO0=PRIMO0 SECONDO1=SECONDO1 SECONDO0=SECONDO0  I_MancheWinner1=MancheWinner1 I_MancheWinner0=MancheWinner0 I_GameWinner1=GameWinner1 I_GameWinner0=GameWinner0 O_Player1Move1=Player1Move1 O_Player1Move0=Player1Move0 O_Player2Move1=Player2Move1 O_Player2Move0=Player2Move0  O_Min=Min O_Max=Max O_AreMovesValid=Valid PARTITA1=PARTITA1 PARTITA0=PARTITA0 MANCHE1=MANCHE1 MANCHE0=MANCHE0 
+.subckt FSM     Valid=Valid Min=Min Max=Max Player1Move1=Player1Move1 Player1Move0=Player1Move0 Player2Move1=Player2Move1 Player2Move0=Player2Move0 O_MancheWinner1=MancheWinner1 O_MancheWinner0=MancheWinner0 O_GameWinner1=GameWinner1 O_GameWinner0=GameWinner0
+
+
+
+.end

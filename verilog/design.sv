@@ -128,7 +128,7 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
   always_ff @(posedge clk or posedge INIZIA) begin: FSM_PresentStateFFs
     if (INIZIA) begin 
       current_state <= START; // reset the FSM
-      // [...]?
+
     end
     else begin
       current_state <= next_state;
@@ -160,24 +160,28 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
       MANCHE     = INVALID;
       tmp_game_winner = NOT_ENDED;
     end
-    
+    if (INIZIA==1) begin
+      tmp_game_winner <= NOT_ENDED;
+      early_winner <=  NOT_ENDED;
+    end else begin
     // FSM Output Logic
-    if (!played_min) begin
-      if (early_winner) PARTITA = early_winner;
-      else              PARTITA = NOT_ENDED;
-    end
-    else PARTITA = tmp_game_winner;
+      if (!played_min) begin
+        if (early_winner) PARTITA = early_winner;
+        else              PARTITA = NOT_ENDED;
+      end
+      else PARTITA = tmp_game_winner;
 
-    if (tmp_game_winner != NOT_ENDED && next_state == START) early_winner = tmp_game_winner;
+      if (tmp_game_winner != NOT_ENDED && next_state == START) early_winner = tmp_game_winner;
 
-    if (played_max) begin
-      case (current_state)
-        P1_W2:  PARTITA = P1_WINNER;
-        P1_W1:  PARTITA = P1_WINNER;
-        START:  PARTITA =      DRAW;
-        P2_W1:  PARTITA = P2_WINNER;
-        P2_W2:  PARTITA = P2_WINNER;
-      endcase
+      if (played_max) begin
+        case (current_state)
+          P1_W2:  PARTITA = P1_WINNER;
+          P1_W1:  PARTITA = P1_WINNER;
+          START:  PARTITA =      DRAW;
+          P2_W1:  PARTITA = P2_WINNER;
+          P2_W2:  PARTITA = P2_WINNER;
+        endcase
+      end
     end
   end
 
