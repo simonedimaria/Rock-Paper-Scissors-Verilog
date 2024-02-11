@@ -1,4 +1,4 @@
-`timescale 1ns / 1ns
+`timescale 1ns / 1ps
 
 module MorraCinese_tb;
   logic        clk;
@@ -70,9 +70,9 @@ module MorraCinese_tb;
     input logic [1:0] SECONDO_t;
     begin
       #2;
-      INIZIA  = INIZIA_t;
-      PRIMO   = PRIMO_t;
-      SECONDO = SECONDO_t;
+      INIZIA  <= INIZIA_t;
+      PRIMO   <= PRIMO_t;
+      SECONDO <= SECONDO_t;
     end
   endtask
   
@@ -81,8 +81,7 @@ module MorraCinese_tb;
     input logic [1:0] expected_MANCHE;
     input logic [1:0] expected_PARTITA;
     begin
-      #2;
-      assert (manche_winner === expected_MANCHE)  else $error("Expected MANCHE:  %b, Received MANCHE:  %b, with inputs: INIZIA:%b, PRIMO:%b, SECONDO:%b", expected_MANCHE, MANCHE, INIZIA, PRIMO, SECONDO);   // @TO-DO: change manche_winner to MANCHE
+      assert (MANCHE === expected_MANCHE)  else $error("Expected MANCHE:  %b, Received MANCHE:  %b, with inputs: INIZIA:%b, PRIMO:%b, SECONDO:%b", expected_MANCHE, MANCHE, INIZIA, PRIMO, SECONDO);   // @TO-DO: change manche_winner to MANCHE
       assert (PARTITA === expected_PARTITA) else $error("Expected PARTITA: %b, Received PARTITA: %b, with inputs: INIZIA:%b, PRIMO:%b, SECONDO:%b", expected_PARTITA, PARTITA, INIZIA, PRIMO, SECONDO); // may be broken :'(
     end
   endtask
@@ -103,30 +102,38 @@ module MorraCinese_tb;
     // Round 1 (0-0)
     round(PLAY, NO_MOVE, NO_MOVE);
     assert_output(INVALID, NOT_ENDED);
+    $display("Round 1");
 
     // Round 2 (1-0)
     round(PLAY, PAPER, ROCK);
     assert_output(PLAYER1, NOT_ENDED);
+    $display("Round 2");
+
     
     // Round 3 (1-1)
     round(PLAY, SCISSORS, ROCK);
     assert_output(PLAYER2, NOT_ENDED);
+    $display("Round 3");
     
     // Round 4 (1-1)
     round(PLAY, NO_MOVE, PAPER);
     assert_output(INVALID, NOT_ENDED);
+    $display("Round 4");
     
     // Round 5 (1-1)
     round(PLAY, ROCK, ROCK);
     assert_output(NONE, NOT_ENDED);
+    $display("Round 5");
 
     // Round 6 (1-1)
     round(PLAY, ROCK, ROCK);
     assert_output(NONE, NOT_ENDED);
+    $display("Round 6");
 
     // Round 7 (2-1)
     round(PLAY, PAPER, ROCK);
     assert_output(PLAYER1, NOT_ENDED);
+    $display("Round 7");
     
     // more rounds
     // [...]

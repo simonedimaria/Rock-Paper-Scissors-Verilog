@@ -87,7 +87,7 @@ module MorraCinese (
   //  ALU Datapath  //
   ////////////////////
   
-  always_ff @(PRIMO or SECONDO) begin: ALU_MoveValidator
+  always_ff @(posedge clk) begin: ALU_MoveValidator
     //$monitor("@[t:%0t][clk:%b]: INIZIA:%b, PRIMO:%b, SECONDO:%b, moves_are_valid:%b", $time, clk, INIZIA, PRIMO, SECONDO, moves_are_valid);
     if (INIZIA)  moves_are_valid = 1'b0;
     else         moves_are_valid = (PRIMO != INVALID) && (SECONDO != INVALID)
