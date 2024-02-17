@@ -16,7 +16,7 @@ module MorraCinese (
   output logic [4:0] current_state,  next_state,
   output logic       moves_are_valid,
   output logic       played_max, played_min,
-  output logic [1:0] manche_winner, leading_player, tmp_game_winner, early_winner,
+  output logic [1:0] early_winner, tmp_game_winner,
   output reg   [1:0] last_p1_move, last_p2_move
   
 );
@@ -101,17 +101,19 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
     // moves_are_valid will be 1 iff all conditions are met
   end
   
-  always_ff @(posedge clk) begin: ALU_RoundsCounter
+  always_ff @(posedge clk or moves_are_valid) begin: ALU_RoundsCounter
     if (INIZIA) begin 
       max_manches    = MIN_MANCHES + {PRIMO,SECONDO};
       manches_played = 0;
       last_p1_move   = INVALID;
       last_p2_move   = INVALID;
+      played_min     = 1'b0;
+      played_max     = 1'b0;
     end
     else begin
       manches_played = (manches_played + moves_are_valid); // will increase if moves_are_valid is 1
       played_min     = (manches_played >= MIN_MANCHES);
-      played_max     = (manches_played > max_manches);     // played_max will be 1 already when starting LR
+      played_max     = (manches_played >= max_manches);     // played_max will be 1 already when starting LR
       if (moves_are_valid) begin
         last_p1_move       = PRIMO;
         last_p2_move       = SECONDO;
@@ -127,8 +129,7 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
 
   always_ff @(posedge clk or posedge INIZIA) begin: FSM_PresentStateFFs
     if (INIZIA) begin 
-      current_state <= START; // reset the FSM
-
+      current_state   <= START; // reset the FSM
     end
     else begin
       current_state <= next_state;
@@ -155,34 +156,38 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
                 else                                      begin next_state = P2_W2; MANCHE = NONE;    tmp_game_winner = P2_WINNER; end
       endcase
     end
+    else if (INIZIA) begin: rst
+      next_state      = START;
+      tmp_game_winner = NOT_ENDED;
+      early_winner    = NOT_ENDED;
+      MANCHE          = INVALID;
+      PARTITA         = NOT_ENDED;
+    end
     else begin: idle
       next_state = current_state; // @NOTE: bug? when reset (inizia 1) and new game it keeps last game current_state
       MANCHE     = INVALID;
       tmp_game_winner = NOT_ENDED;
     end
-    if (INIZIA==1) begin
-      tmp_game_winner <= NOT_ENDED;
-      early_winner <=  NOT_ENDED;
-    end else begin
-    // FSM Output Logic
-      if (!played_min) begin
-        if (early_winner) PARTITA = early_winner;
-        else              PARTITA = NOT_ENDED;
-      end
-      else PARTITA = tmp_game_winner;
 
-      if (tmp_game_winner != NOT_ENDED && next_state == START) early_winner = tmp_game_winner;
-
-      if (played_max) begin
-        case (current_state)
-          P1_W2:  PARTITA = P1_WINNER;
-          P1_W1:  PARTITA = P1_WINNER;
-          START:  PARTITA =      DRAW;
-          P2_W1:  PARTITA = P2_WINNER;
-          P2_W2:  PARTITA = P2_WINNER;
-        endcase
-      end
+    if (played_min) begin
+      if (early_winner) PARTITA = early_winner;
+      else              PARTITA = tmp_game_winner;
     end
+    else begin
+      if (tmp_game_winner != NOT_ENDED && next_state == START) early_winner = tmp_game_winner;
+      else PARTITA = NOT_ENDED;
+    end
+      
+    if (played_max) begin
+      case (next_state)
+        P1_W2:  PARTITA = P1_WINNER;
+        P1_W1:  PARTITA = P1_WINNER;
+        START:  PARTITA =      DRAW;
+        P2_W1:  PARTITA = P2_WINNER;
+        P2_W2:  PARTITA = P2_WINNER;
+      endcase
+    end
+    //end
   end
 
 endmodule
