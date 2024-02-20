@@ -12,7 +12,7 @@ module MorraCinese_tb;
   logic [4:0] current_state, next_state;
   logic       moves_are_valid;
   logic       played_max, played_min;
-  logic [1:0] manche_winner, leading_player, tmp_game_winner, last_p1_move, last_p2_move;
+  logic [1:0] early_winner, tmp_game_winner, last_p1_move, last_p2_move;
   integer tbf, outf;
 
   // Instantiate the Design Under Test (DUT)
@@ -31,8 +31,7 @@ module MorraCinese_tb;
     .moves_are_valid(moves_are_valid),
     .played_max(played_max),
     .played_min(played_min),
-    .manche_winner(manche_winner),
-    .leading_player(leading_player),
+    .early_winner(early_winner),
     .tmp_game_winner(tmp_game_winner),
     .last_p1_move(last_p1_move),
     .last_p2_move(last_p2_move)
@@ -96,7 +95,7 @@ module MorraCinese_tb;
     $fdisplay(tbf,"read_blif FSMD.blif");
 
     $monitor("@[t:%0t][clk:%b]    | INPUTS        --> INIZIA:%b, PRIMO:%b, SECONDO:%b\n",  $time, clk, INIZIA, PRIMO, SECONDO,
-             "                 | DP internals  --> max_manches:%b, manches_played:%b, moves_are_valid:%b last_p1_move:%b, last_p2_move:%b, manche_winner:%b, leading_player:%b, tmp_game_winner:%b\n", max_manches, manches_played, moves_are_valid, last_p1_move, last_p2_move, manche_winner, leading_player, tmp_game_winner,
+             "                 | DP internals  --> max_manches:%b, manches_played:%b, moves_are_valid:%b last_p1_move:%b, last_p2_move:%b, early_winner:%b, tmp_game_winner:%b\n", max_manches, manches_played, moves_are_valid, last_p1_move, last_p2_move, early_winner, tmp_game_winner,
              "                 | FSM internals --> current_state:%b, next_state:%b\n",  current_state, next_state,
              "                 | OUTPUTS       --> MANCHE:%b, PARTITA:%b",            MANCHE, PARTITA
              );
@@ -140,8 +139,6 @@ module MorraCinese_tb;
     play_round_and_check(PLAY, PAPER, ROCK, INVALID, NOT_ENDED);
     //assert_output(PLAYER1, NOT_ENDED);
     $display("Round 7");
-    
-
 
 
     // Restart the game
@@ -175,20 +172,24 @@ module MorraCinese_tb;
     // Round 4 (0-2)
     play_round_and_check(PLAY, PAPER, SCISSORS, PLAYER2, PLAYER2);
     
-    // $display("game 4");
-    // // Restart the game
-    // play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);
-    // // Round 1 (0-0)
-    // play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
-    // // Round 2 (0-0)
-    // play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
-    // // Round 3 (0-0)
-    // play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
-    // // Round 4 (0-1)
-    // play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
-    // // Round 5 (0-0)
-    // play_round_and_check(PLAY, ROCK, SCISSORS, DRAW, NONE);
-    // // Round 2 (0-0)
+    $display("game 4");
+    // Restart the game
+    play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);
+    
+    // Round 1 (0-0)
+    play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
+    
+    // Round 2 (0-0)
+    play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
+    
+    // Round 3 (0-0)
+    play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
+    
+    // Round 4 (0-1)
+    play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
+    
+    // Round 5 (1-1)
+    play_round_and_check(PLAY, ROCK, SCISSORS, PLAYER1, NONE);
     
     
     $finish; // Stop simulation
