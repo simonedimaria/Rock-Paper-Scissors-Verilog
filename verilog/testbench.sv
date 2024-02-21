@@ -7,12 +7,6 @@ module MorraCinese_tb;
   logic        INIZIA;
   logic [1:0] MANCHE;
   logic [1:0] PARTITA;
-  // for debug purposes 
-  logic [4:0] max_manches, manches_played;
-  logic [4:0] current_state, next_state;
-  logic       moves_are_valid;
-  logic       played_max, played_min;
-  logic [1:0] early_winner, tmp_game_winner, last_p1_move, last_p2_move;
   integer tbf, outf;
 
   // Instantiate the Design Under Test (DUT)
@@ -23,19 +17,7 @@ module MorraCinese_tb;
     .INIZIA (INIZIA),
     .MANCHE (MANCHE),
     .PARTITA(PARTITA)
-    , // for debug purposes
-    .max_manches  (max_manches),
-    .manches_played (manches_played),
-    .current_state(current_state),
-    .next_state(next_state),
-    .moves_are_valid(moves_are_valid),
-    .played_max(played_max),
-    .played_min(played_min),
-    .early_winner(early_winner),
-    .tmp_game_winner(tmp_game_winner),
-    .last_p1_move(last_p1_move),
-    .last_p2_move(last_p2_move)
-  );
+    );
   
   // Constants
   localparam bit [0:0]  PLAY    = 1'b0,  
@@ -65,7 +47,7 @@ module MorraCinese_tb;
   
   // Define tasks for setting inputs
   task play_round_and_check;
-    input logic [0:0] INIZIA_t;
+    input logic       INIZIA_t;
     input logic [1:0] PRIMO_t;
     input logic [1:0] SECONDO_t;
     input logic [1:0] expected_MANCHE;
@@ -89,90 +71,73 @@ module MorraCinese_tb;
   initial begin: starttest
     $dumpfile("MorraCinese_tb.vcd");
     $dumpvars(0, MorraCinese_tb);
+    
     // Debugging
     tbf  = $fopen("testbench.script", "w");
     outf = $fopen("output_verilog.txt", "w");
     $fdisplay(tbf,"read_blif FSMD.blif");
 
     $monitor("@[t:%0t][clk:%b]    | INPUTS        --> INIZIA:%b, PRIMO:%b, SECONDO:%b\n",  $time, clk, INIZIA, PRIMO, SECONDO,
-             "                 | DP internals  --> max_manches:%b, manches_played:%b, moves_are_valid:%b last_p1_move:%b, last_p2_move:%b, early_winner:%b, tmp_game_winner:%b\n", max_manches, manches_played, moves_are_valid, last_p1_move, last_p2_move, early_winner, tmp_game_winner,
-             "                 | FSM internals --> current_state:%b, next_state:%b\n",  current_state, next_state,
-             "                 | OUTPUTS       --> MANCHE:%b, PARTITA:%b",            MANCHE, PARTITA
+             "                     | OUTPUTS       --> MANCHE:%b, PARTITA:%b",            MANCHE, PARTITA
              );
-  //$monitor("@[t:%0t] CHANGED moves_are_valid to %b", $time, moves_are_valid);
+
     // Start
     play_round_and_check(RESTART, 2'b10, 2'b01, INVALID, NOT_ENDED);       // setting n. of rounds to play: PRIMO+SECONDO + 4 = 1001 + 0100 = 13 rounds to play
-    //assert_output(INVALID, NOT_ENDED);
     
     // Round 1 (0-0)
     play_round_and_check(PLAY, NO_MOVE, NO_MOVE, INVALID, NOT_ENDED);
-    //assert_output(INVALID, NOT_ENDED);
-    $display("Round 1");
 
     // Round 2 (1-0)
     play_round_and_check(PLAY, PAPER, ROCK, PLAYER1, NOT_ENDED);
-    //assert_output(PLAYER1, NOT_ENDED);
-    $display("Round 2");
-
     
     // Round 3 (1-1)
     play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
-    //assert_output(PLAYER2, NOT_ENDED);
-    $display("Round 3");
     
     // Round 4 (1-1)
     play_round_and_check(PLAY, NO_MOVE, PAPER, INVALID, NOT_ENDED);
-    //assert_output(INVALID, NOT_ENDED);
-    $display("Round 4");
     
     // Round 5 (1-1)
     play_round_and_check(PLAY, ROCK, ROCK, INVALID, NOT_ENDED);
-    //assert_output(NONE, NOT_ENDED);
-    $display("Round 5");
 
     // Round 6 (1-1)
     play_round_and_check(PLAY, ROCK, ROCK, INVALID, NOT_ENDED);
-    //assert_output(NONE, NOT_ENDED);
-    $display("Round 6");
 
     // Round 7 (2-1)
     play_round_and_check(PLAY, PAPER, ROCK, INVALID, NOT_ENDED);
-    //assert_output(PLAYER1, NOT_ENDED);
-    $display("Round 7");
 
 
     // Restart the game
     play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);     // setting n. of rounds to play: PRIMO+SECONDO + 4 = 0001 + 0100 = 5 rounds to play
-    //assert_output(INVALID, NOT_ENDED);
 
     // Round 1 (0-1)
     play_round_and_check(PLAY, ROCK, PAPER, PLAYER2, NOT_ENDED);
-    //assert_output(PLAYER2, NOT_ENDED);
 
     // Round 2 (0-2)
     play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
-    //assert_output(PLAYER2, NOT_ENDED);
 
     // Round 3 (0-3)
     play_round_and_check(PLAY, PAPER, SCISSORS, PLAYER2, NOT_ENDED);
-    //assert_output(PLAYER2, NOT_ENDED);
 
     // Round 4 (1-3)
     play_round_and_check(PLAY, SCISSORS, PAPER, PLAYER1, PLAYER2);
-    //assert_output(PLAYER1, P2_WINNER);
     
+
     // Restart the game
     play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);
+
     // Round 1 (0-0)
     play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
+
     // Round 2 (0-0)
     play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
+
     // Round 3 (0-1)
     play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
+
     // Round 4 (0-2)
     play_round_and_check(PLAY, PAPER, SCISSORS, PLAYER2, PLAYER2);
-    
-    $display("game 4");
+
+
     // Restart the game
     play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);
     

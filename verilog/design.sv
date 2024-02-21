@@ -2,23 +2,16 @@
 // FSMD implementation of the Morra Cinese in Verilog
 // Module Name : MorraCinese
 // File Name   : design.sv
+// Authors     : Simone Di Maria, Pietro Secchi
 //-----------------------------------------------------
 
 module MorraCinese (
-  input  logic         clk,
-  input  logic  [1:0]  PRIMO,   // Player 1 input move
-  input  logic  [1:0]  SECONDO, // Player 2 input move
-  input  logic         INIZIA,  // Restart the game
-  output logic  [1:0]  MANCHE,  // Result of the last round
-  output logic  [1:0]  PARTITA  // Result of the entire game
-  ,// for debugging purposes
-  output logic [4:0] max_manches, manches_played,
-  output logic [4:0] current_state,  next_state,
-  output logic       moves_are_valid,
-  output logic       played_max, played_min,
-  output logic [1:0] early_winner, tmp_game_winner,
-  output reg   [1:0] last_p1_move, last_p2_move
-  
+  input  logic        clk,
+  input  logic [1:0]  PRIMO,   // Player 1 input move
+  input  logic [1:0]  SECONDO, // Player 2 input move
+  input  logic        INIZIA,  // Restart the game
+  output logic [1:0]  MANCHE,  // Result of the last round
+  output logic [1:0]  PARTITA  // Result of the entire game
 );
 
   //----------- Internal Constants -----------
@@ -34,13 +27,16 @@ module MorraCinese (
                         P2_WINNER = 2'b10,
                         DRAW      = 2'b11;
   //-----------------------------------------     
+  
   //----- FSM states (one-hot encoding) -----
-  parameter P1_W2 = 5'b00001,
-            P1_W1 = 5'b00010,
-            START = 5'b00100,
+  parameter P2_W2 = 5'b10000,
             P2_W1 = 5'b01000,
-            P2_W2 = 5'b10000;
+            START = 5'b00100,
+            P1_W1 = 5'b00010,
+            P1_W2 = 5'b00001;
+
   //-----------------------------------------
+  
   //------------- Players Moves -------------
   class Move;
     bit [1:0] strong_to;
@@ -61,28 +57,30 @@ module MorraCinese (
   endclass
 
   typedef enum bit [1:0] {
-    ROCK      = 2'b01,
-    PAPER     = 2'b10,
-    SCISSORS  = 2'b11
+    ROCK     = 2'b01,
+    PAPER    = 2'b10,
+    SCISSORS = 2'b11
   } move_id;
 
   Move moves [move_id];
   //-----------------------------------------
+  
   //---------- Internal Registers -----------
-  //reg [4:0] max_manches, manches_played;
-  //reg [4:0] current_state, next_state;
-  //reg       moves_are_valid;
-  //reg       played_max, played_min;
-  //reg [1:0] manche_winner, leading_player, tmp_game_winner, last_p1_move, last_p2_move;
-  //reg [1:0] last_p1_move, last_p2_move;
+  reg [4:0] max_manches, manches_played;
+  reg [4:0] current_state,  next_state;
+  reg       moves_are_valid;
+  reg       played_max, played_min;
+  reg [1:0] early_winner, tmp_game_winner;
+  reg [1:0] last_p1_move, last_p2_move;
   reg [1:0] last_manche_winner, last_game_winner;
   //-----------------------------------------
+  
   //------------ Constructor ----------------
   initial begin
-    moves[INVALID]  = new(INVALID,    INVALID); // [0,0] is invalid to avoid SIGSEGV in FSM_NextStateLogic
-    moves[ROCK]     = new(SCISSORS,   PAPER);
-    moves[PAPER]    = new(ROCK,       SCISSORS);
-    moves[SCISSORS] = new(PAPER,      ROCK);
+    moves[INVALID]  = new(INVALID,   INVALID); // [0,0] is invalid to avoid SIGSEGV in FSM_NextStateLogic
+    moves[ROCK]     = new(SCISSORS,  PAPER);
+    moves[PAPER]    = new(ROCK,      SCISSORS);
+    moves[SCISSORS] = new(PAPER,     ROCK);
   end
   //-----------------------------------------
   
@@ -92,7 +90,7 @@ module MorraCinese (
   ////////////////////
   
 always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
-    if (INIZIA)  moves_are_valid <= 1'b0;
+    if (INIZIA) moves_are_valid <= 1'b0;
     else begin
       moves_are_valid <= (PRIMO != INVALID) && (SECONDO != INVALID)
                         && !( (last_p1_move == PRIMO)   && (last_manche_winner == PLAYER1) )
@@ -104,7 +102,7 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
   always_ff @(posedge clk or moves_are_valid) begin: ALU_RoundsCounter
     if (INIZIA) begin 
       max_manches    = MIN_MANCHES + {PRIMO,SECONDO};
-      manches_played = 0;
+      manches_played = 1'b0;
       last_p1_move   = INVALID;
       last_p2_move   = INVALID;
       played_min     = 1'b0;
@@ -113,7 +111,7 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
     else begin
       manches_played = (manches_played + moves_are_valid); // will increase if moves_are_valid is 1
       played_min     = (manches_played >= MIN_MANCHES);
-      played_max     = (manches_played >= max_manches);     // played_max will be 1 already when starting LR
+      played_max     = (manches_played >= max_manches);    // played_max will be 1 already when starting LR
       if (moves_are_valid) begin
         last_p1_move       = PRIMO;
         last_p2_move       = SECONDO;
@@ -129,7 +127,7 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
 
   always_ff @(posedge clk or posedge INIZIA) begin: FSM_PresentStateFFs
     if (INIZIA) begin 
-      current_state   <= START; // reset the FSM
+      current_state <= START; // reset the FSM
     end
     else begin
       current_state <= next_state;
@@ -164,11 +162,12 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
       PARTITA         = NOT_ENDED;
     end
     else begin: idle
-      next_state = current_state; // @NOTE: bug? when reset (inizia 1) and new game it keeps last game current_state
-      MANCHE     = INVALID;
+      next_state      = current_state;
+      MANCHE          = INVALID;
       tmp_game_winner = NOT_ENDED;
     end
 
+    // FSM_OutputLogic
     if (played_min) begin
       if (early_winner) PARTITA = early_winner;
       else              PARTITA = tmp_game_winner;
@@ -187,7 +186,6 @@ always_ff @(posedge clk or PRIMO or SECONDO) begin: ALU_MoveValidator
         P2_W2:  PARTITA = P2_WINNER;
       endcase
     end
-    //end
   end
 
 endmodule
