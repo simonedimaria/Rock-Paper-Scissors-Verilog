@@ -82,78 +82,102 @@ module MorraCinese_tb;
              );
 
     // Start
+    $display("Round 0");
     play_round_and_check(RESTART, 2'b10, 2'b01, INVALID, NOT_ENDED);       // setting n. of rounds to play: PRIMO+SECONDO + 4 = 1001 + 0100 = 13 rounds to play
     
     // Round 1 (0-0)
+    $display("Round 1");
     play_round_and_check(PLAY, NO_MOVE, NO_MOVE, INVALID, NOT_ENDED);
 
     // Round 2 (1-0)
+    $display("Round 2");
     play_round_and_check(PLAY, PAPER, ROCK, PLAYER1, NOT_ENDED);
     
     // Round 3 (1-1)
+    $display("Round 3");
     play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
     
     // Round 4 (1-1)
+    $display("Round 4");
     play_round_and_check(PLAY, NO_MOVE, PAPER, INVALID, NOT_ENDED);
     
     // Round 5 (1-1)
+    $display("Round 5");
     play_round_and_check(PLAY, ROCK, ROCK, INVALID, NOT_ENDED);
 
     // Round 6 (1-1)
+    $display("Round 6");
     play_round_and_check(PLAY, ROCK, ROCK, INVALID, NOT_ENDED);
 
     // Round 7 (2-1)
+    $display("Round 7");
     play_round_and_check(PLAY, PAPER, ROCK, INVALID, NOT_ENDED);
 
 
     // Restart the game
+    $display("Round 0");
     play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);     // setting n. of rounds to play: PRIMO+SECONDO + 4 = 0001 + 0100 = 5 rounds to play
 
     // Round 1 (0-1)
+    $display("Round 1");
     play_round_and_check(PLAY, ROCK, PAPER, PLAYER2, NOT_ENDED);
 
     // Round 2 (0-2)
+    $display("Round 2");
     play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
 
     // Round 3 (0-3)
+    $display("Round 3");
     play_round_and_check(PLAY, PAPER, SCISSORS, PLAYER2, NOT_ENDED);
 
     // Round 4 (1-3)
+    $display("Round 4");
     play_round_and_check(PLAY, SCISSORS, PAPER, PLAYER1, PLAYER2);
     
 
     // Restart the game
+    $display("Round 0");
     play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);
 
     // Round 1 (0-0)
+    $display("Round 1");
     play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
 
     // Round 2 (0-0)
+    $display("Round 2");
     play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
 
     // Round 3 (0-1)
+    $display("Round 3");
     play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
 
     // Round 4 (0-2)
+    $display("Round 4");
     play_round_and_check(PLAY, PAPER, SCISSORS, PLAYER2, PLAYER2);
 
 
     // Restart the game
+    $display("Round 0");
     play_round_and_check(RESTART, 2'b00, 2'b01, INVALID, NOT_ENDED);
     
     // Round 1 (0-0)
+    $display("Round 1");  
     play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
     
     // Round 2 (0-0)
+    $display("Round 2");
     play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
     
     // Round 3 (0-0)
+    $display("Round 3");
     play_round_and_check(PLAY, SCISSORS, SCISSORS, DRAW, NOT_ENDED);
     
     // Round 4 (0-1)
+    $display("Round 4");
     play_round_and_check(PLAY, SCISSORS, ROCK, PLAYER2, NOT_ENDED);
     
     // Round 5 (1-1)
+    $display("Round 5");
     play_round_and_check(PLAY, ROCK, SCISSORS, PLAYER1, NONE);
     
     
