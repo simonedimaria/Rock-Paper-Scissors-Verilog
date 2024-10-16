@@ -177,7 +177,7 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 
 ## 4.1) Verilog
 
-[Verilog design choices](./report/REPORT.pdf#page=13)
+[Verilog design choices (page 7)](./report/REPORT.pdf#page=7)  
 [Verilog code](./verilog/design.sv)
 
 
