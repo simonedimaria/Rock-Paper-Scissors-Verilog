@@ -12,14 +12,6 @@
   - [4.1) Verilog](#41-verilog)
   - [4.2) SIS](#42-sis)
 - [5. Report](#5-report)
-  - [5.1) Overview](#51-overview)
-  - [5.2) Pre-optimization](#52-pre-optimization)
-  - [5.3) Post-optimization](#53-post-optimization)
-  - [5.4) Technology Mapping](#54-technology-mapping)
-- [6. Notes](#6-notes)
-  - [6.1) Design choices](#61-design-choices)
-- [7. TO-DO](#7-to-do)
-
 
 ---
 # 1. Game Rules
@@ -43,26 +35,100 @@
 
 ```
 .
-├── ELABORATO_SIS_2024.pdf             : Linee guida del progetto
-├── images
-│   ├── rock-paper-scissors.jpg
-│   ├── RPS101.jpeg
-│   ├── rps9.jpg
-│   └── RPSLS.jpg
 ├── README.md
+├── report
+│   ├── assets
+│   │   │
+│   │   └── [...]
+│   ├── datapath.drawio
+│   ├── FSMD.drawio
+│   ├── REPORT.pdf
+│   └── REPORT.tex
 ├── sis
-│   ├── FSMD.blif                      : simulazione macchina a stati (pre mapping tecnologico)
-│   ├── fsmSW_synch.blif               : simulazione macchina a stati (post mapping tecnologico)
-│   ├── main.blif
-│   ├── non_ottimizzato/               : sorgenti .blif del circuito non ottimizzati
-│   │   ├──
-│   │   └──
-│   ├── output_sis.txt                 : output di testbench.sv
-│   └── testbench.script               : file .script generato da testbench.sv 
+│   ├── FSMD.blif
+│   ├── non_ottimizzato
+│   │   ├── Base
+│   │   │   ├── Adder
+│   │   │   │   ├── Adder_1b.blif
+│   │   │   │   ├── Adder_4b.blif
+│   │   │   │   └── Adder_5b.blif
+│   │   │   ├── Comparators
+│   │   │   │   ├── Equal_2b.blif
+│   │   │   │   ├── Equal_4b.blif
+│   │   │   │   ├── Equal_5b.blif
+│   │   │   │   ├── Greater_5b.blif
+│   │   │   │   └── GreaterEqual_5b.blif
+│   │   │   ├── Constants
+│   │   │   │   ├── Four_4b.blif
+│   │   │   │   ├── One_1b.blif
+│   │   │   │   ├── One_2b.blif
+│   │   │   │   ├── Zero_1b.blif
+│   │   │   │   └── Zero_2b.blif
+│   │   │   ├── Gates
+│   │   │   │   ├── And_2b.blif
+│   │   │   │   ├── And_3b.blif
+│   │   │   │   ├── Nand_2b.blif
+│   │   │   │   ├── Nor_2b.blif
+│   │   │   │   ├── Not_1b.blif
+│   │   │   │   ├── Or_2b.blif
+│   │   │   │   ├── Xnor_1b.blif
+│   │   │   │   ├── Xnor_2b.blif
+│   │   │   │   └── Xor_2b.blif
+│   │   │   ├── Mux
+│   │   │   │   ├── Mux_2i1b.blif
+│   │   │   │   ├── Mux_2i2b.blif
+│   │   │   │   ├── Mux_2i4b.blif
+│   │   │   │   └── Mux_2i5b.blif
+│   │   │   ├── Registers
+│   │   │   │   ├── Register_1b.blif
+│   │   │   │   ├── Register_2b.blif
+│   │   │   │   ├── Register_4b.blif
+│   │   │   │   ├── Register_5b.blif
+│   │   │   │   ├── RegisterRST_1b.blif
+│   │   │   │   └── RegisterRST_2b.blif
+│   │   │   └── Utils
+│   │   │       ├── InputEqualOutput.blif
+│   │   │       └── NoFanout.blif
+│   │   ├── Datapath.blif
+│   │   ├── fsm.blif
+│   │   ├── FSMD.blif
+│   │   ├── fsmN.blif
+│   │   ├── Modules
+│   │   │   ├── CounterMatches.blif
+│   │   │   ├── LastNonZero.blif
+│   │   │   ├── MaxManchesCalculator.blif
+│   │   │   ├── Player.blif
+│   │   │   └── Players.blif
+│   │   └── Utils
+│   │       ├── fsmTab.blif
+│   │       ├── opts
+│   │       │   ├── algebraic.txt
+│   │       │   ├── boolean.txt
+│   │       │   ├── delay.txt
+│   │       │   ├── res
+│   │       │   │   ├── algebraic.txt
+│   │       │   │   ├── boolean.txt
+│   │       │   │   ├── delay.txt
+│   │       │   │   ├── rugged.txt
+│   │       │   │   └── script.txt
+│   │       │   ├── rugged.txt
+│   │       │   ├── script.txt
+│   │       │   └── Stats.ods
+│   │       ├── simulate10b.script
+│   │       ├── simulate4b.script
+│   │       ├── simulate8b.script
+│   │       └── TestBenchSIS.sv
+│   ├── output_sis.txt
+│   └── testbench.script
+├── utils
+│   ├── bsis.sh
+│   └── create_test.bash
 └── verilog
-    ├── design.sv                      : File principale del modello Verilog
-    ├── output_verilog.txt             : output di testbench.sv
-    └── testbench.sv                   : File principale del testbench
+    ├── design.sv
+    ├── output_verilog.txt
+    └── testbench.sv
+
+22 directories, 93 files
 ```
 
 ---
@@ -96,12 +162,12 @@
 
 ## 3.3) FSM diagram
 
-![FSM diagram image](FSM.svg)
+[FSM diagram image](./report/REPORT.pdf#page=5)
 
 
 ## 3.4) Datapath
 
-[...]
+[detailed Datapath image](./report/REPORT.pdf#page=13)
 
 
 ---
@@ -111,120 +177,16 @@ The circuit in implemented in Verilog (behavioral style) and SIS. Both Verilog a
 
 ## 4.1) Verilog
 
-[...]
+[Verilog design choices](./report/REPORT.pdf#page=13)
+[Verilog code](./verilog/design.sv)
+
 
 ## 4.2) SIS
 
-[...]
+[Fucking zeros and fucking ones cursed code](./sis/non_ottimizzato/)
 
 
 ---
 # 5. Report
 
-## 5.1) Overview
-   - Relazione.pdf
-     - A4 format
-     - Include student IDs, names, and surnames
-     - Cover the specified points:
-       - General circuit architecture (FSMD schema)
-       - Controller state diagram
-       - Datapath architecture
-       - Circuit statistics pre and post optimization for area
-       - Number of gates and delay obtained by mapping onto synch.genlib library
-       - Explanation of design choices
-
-## 5.2) Pre-optimization
-
-[...]
-
-## 5.3) Post-optimization
-
-[...]
-
-## 5.4) Technology Mapping
-
-[...]
-
-
----
-# 6. Notes
-
-## 6.1) Design choices
-
-> **Difficoltà 1**:  
-> Identificazione segnali di controllo che vengono prodotti dalla FSM e che pilotano la selezione dei dati nel DataPath.
-**Soluzione**: [...]
-
-> **Difficoltà 2**:  
-> Generazione da parte del DataPath di quei segnali di condizione che vincolano l'evoluzione tra gli stati della FSM
-**Soluzione**: [...]
-
-> **Design Choice 1**:   
-> XNOR module or CMP module for comparisons (i.e. `manches>=4`, `manches<=19`, ...)
-[...]
-
-> **Design Choice 2**:   
-> Which code styleguide for Verilog?
-[lowRISC Verilog Coding Style](https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md)
-
-> **Design Choice 3**:
-> What bit encoding to use for FSM states / Moves?
-Grey code. why? idk. TBD (To Be Discovered): https://www.allaboutcircuits.com/technical-articles/encoding-the-states-of-a-finite-state-machine-vhdl/
-
-> **Design Choice 4**:   
-> `<=` or `=` for reg in verilog?
-[...]
-
-> **Design Choice 5**:   
-> suffixes or not suffixes for Verilog vars?
-No suffixes to be consistent with the lineguides IO that does not have any prefixes (`_i`, `_o`, ...).
-
-> **Design Choice 6**:   
-> `always @()` or `always_comb` or `always_ff` in verilog?
-Yes, because of purely combinational and sequential blocks.  
-- Sequential logic: `always_ff`, clocked, must use non-blocking assignments `<=`.  
-- Combinational logic: `always_comb`, must use blocking assignments `=`.
-
----
-# 7. TO-DO
-
-- [X] FSM
-  - [X] Finite State Machine diagram using [Tikz on LaTeX](https://tikz.dev/library-automata)
-  - [X] Use 5 states instead of 6 by removing the START state 
-  - [ ] Fix input/output bits in table
-  - [ ] how to manipulate idle?
-  - [ ] change "TIE" state to "START" 
-- [ ] Datapath using [draw.io](https://draw.io)
-  - [ ] write bit size on each wire, registry, I/O, ...
-  - [ ] write `clk` input
-  - [ ] fix constants invisible wire 
-  - [ ] add names to registers
-  - [ ] make one big datapath module
-  - [ ] do the arrows nodes better
-- [ ] Verilog implementation
-  - [X] Design structure
-  - [ ] FSM block
-    - [ ] FSM_PresentStateFFs
-    - [ ] FSM_NextStateLogic
-    - [ ] idle logic
-  - [ ] Datapath block
-    - [ ] Moves Validator
-    - [ ] Manches Counter
-  - [ ] rework events handling
-- [ ] SIS implementation
-  - [ ] Fsm fix case p1_2 and p2_2 to TIE when DRAW
-  - [X] Module Player
-  - [X] Module datapath
-  - [ ] Module FSM
-  - [ ] link FSM-D
-- [ ] Fix manches counter  
-- [ ] Testbench
-- [ ] Better naming/code style
-- [ ] Pre-optimization statistics
-- [ ] Post-optimization statistics
-- [ ] Technology Mapping
-- [ ] Complete the README.md file
-- [ ] Write the report (LaTEX)
-- [ ] Release
-
-
+[have fun :)](./report/REPORT.pdf)
